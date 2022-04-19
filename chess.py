@@ -48,10 +48,57 @@ class chess :
                 return True
             return False            
         elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][0] :
+            if positionStart[0] == positionEnd[0] and positionStart[1] != positionEnd[1] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
+                while positionEnd[1] != positionStart[1] :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[1] += (1 if positionEnd[1] < positionStart[1] else -1)   
+                return True 
+            elif positionStart[1] == positionEnd[1] and positionStart[0] != positionEnd[0] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
+                while positionEnd[0] != positionStart[0] :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[0] += (1 if positionEnd[0] < positionStart[0] else -1)
+                return True
+        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][1] :
             pass
+        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][2] :
+            if positionStart[1] != positionEnd[1] and positionStart[0] != positionEnd[0] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2] :
+                while positionStart[0] != positionEnd[0] and positionStart[1] != positionEnd[1]  and (positionStart[0]-positionEnd[0])*-1 == (positionStart[1]-positionEnd[1])*-1 :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[0] += (1 if positionEnd[0] < positionStart[0] else -1)
+                    positionEnd[1] += (1 if positionEnd[1] < positionStart[1] else -1)
+                return True
+        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][3] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2] :
+            if positionStart[0] == positionEnd[0] and positionStart[1] != positionEnd[1] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2] :
+                while positionEnd[1] != positionStart[1] :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[1] += (1 if positionEnd[1] < positionStart[1] else -1)   
+                return True 
+            elif positionStart[1] == positionEnd[1] and positionStart[0] != positionEnd[0] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2] :
+                while positionEnd[0] != positionStart[0] :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[0] += (1 if positionEnd[0] < positionStart[0] else -1)
+                return True
+            elif positionStart[1] != positionEnd[1] and positionStart[0] != positionEnd[0] and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2] :
+                while positionStart[0] != positionEnd[0] and positionStart[1] != positionEnd[1]  and (positionStart[0]-positionEnd[0])*-1 == (positionStart[1]-positionEnd[1])*-1 :
+                    if self.board[positionEnd[0]][positionEnd[1]] != ' ' :
+                        return False
+                    positionEnd[0] += (1 if positionEnd[0] < positionStart[0] else -1)
+                    positionEnd[1] += (1 if positionEnd[1] < positionStart[1] else -1)
+                return True 
+        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][4] :
+            if (positionStart[0] - positionEnd[0])*1 == (0 or 1) and (positionStart[1] - positionEnd[1])*1 == (0 or 1) and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
+                return True
+                
+                
 
     def playPieces(self,positionStart,positionEnd):
         if(self.isValidMove(positionStart,positionEnd)):
+            print (self.board[positionEnd[0]][positionEnd[1]])
             self.board[positionEnd[0]][positionEnd[1]] = self.board[positionStart[0]][positionStart[1]]
             self.board[positionStart[0]][positionStart[1]] = ' '
             self.turn += 1
