@@ -36,30 +36,31 @@ class chess :
         self.board[6][6] = 'p'
         self.board[6][7] = 'p'
         self.turn = 0
-        self.playerPieceList = [['R','N','B','Q','K','B','N','R','P'],['r','n','b','q','k','b','n','r','p']]
+        self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
         
     def isValidMove(self,positionStart,positionEnd) :
-        if self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][8] :
-            if positionEnd[0] == positionStart[0] + 2 and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ' and self.board[positionStart[0] + 1][positionStart[1]] == ' ' and positionStart[0] == (1 if self.turn%2 == 0  else 6) :
+        if self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][5] :
+            if positionEnd[0] == positionStart[0] + (2 if self.turn%2 == 0  else -2) and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ' and self.board[positionStart[0] + (1 if self.turn%2 == 0  else -1)][positionStart[1]] == ' ' and positionStart[0] == (1 if self.turn%2 == 0  else 6) :
                 return True
-            elif positionEnd[0] == positionStart[0] + 1 and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ':
+            elif positionEnd[0] == positionStart[0] + (1 if self.turn%2 == 0  else -1) and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ':
                 return True
-            elif positionEnd[0] == positionStart[0] + 1 and (positionEnd[1] == positionStart[1] + 1 or positionEnd[1] == positionStart[1] - 1) and self.board[positionEnd[0]][positionEnd[1]] != ' ' and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
+            elif positionEnd[0] == positionStart[0] + (1 if self.turn%2 == 0  else -1) and (positionEnd[1] == positionStart[1] + 1 or positionEnd[1] == positionStart[1] - 1) and self.board[positionEnd[0]][positionEnd[1]] != ' ' and self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
                 return True
             return False            
-        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][7] :
+        elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][0] :
             pass
 
     def playPieces(self,positionStart,positionEnd):
         if(self.isValidMove(positionStart,positionEnd)):
+            self.board[positionEnd[0]][positionEnd[1]] = self.board[positionStart[0]][positionStart[1]]
             self.board[positionStart[0]][positionStart[1]] = ' '
-            self.board[positionEnd[0]][positionEnd[1]] = self.playerPieceList[self.turn%2][8]
             self.turn += 1
             return True
         return False
 
 
     def affBoard(self) :
+        print("   ",['0', '1', '2', '3', '4', '5', '6', '7'])
         for i in range(8) :
             print(i, " ",self.board[i])
 
@@ -68,7 +69,9 @@ class chess :
         end = (input("Enter the position you want to move the piece to : " ))
         if self.playPieces([int(start[0]),int(start[1])],[int(end[0]),int(end[1])]) :
             self.affBoard()
+            self.play()
         else :
+            print("Invalid move")
             self.play()
 
 
