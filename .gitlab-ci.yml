@@ -4,4 +4,5 @@ stages:
 build-code-job:
   stage: build
   script:
-    - echo "Check the ruby version, then build some Ruby project files:"
+    - echo "Lancement de l'application"
+    - python test.py
