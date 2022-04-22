@@ -3,7 +3,7 @@ stages:
 
 build-code-job:
   stage: build
-  image: python3
+  image: python:3
   script:
     - echo "Lancement de l'application"
     - pip install flask
