@@ -9,7 +9,7 @@ app.run(debug=True)
 def hello():
     game = Chess('player1','player2')
     board = game.getBoardJson()
-    jsonFile = open("static/json/data.json", "w")
+    jsonFile = open("data/board.json", "w")
     jsonFile.write(board)
     jsonFile.close()
 
