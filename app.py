@@ -7,4 +7,10 @@ app.run(debug=True)
 
 @app.route('/')
 def hello():
+    game = Chess('player1','player2')
+    board = game.getBoardJson()
+    jsonFile = open("static/json/data.json", "w")
+    jsonFile.write(board)
+    jsonFile.close()
+
     return render_template('index.html') 

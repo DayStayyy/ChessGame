@@ -1,4 +1,6 @@
-class chess :
+from json import dumps
+
+class Chess :
     def __init__(self,player1,player2) :
         self.player1 = player1
         self.player2 = player2
@@ -121,7 +123,15 @@ class chess :
             print("Invalid move")
             self.play()
 
+    def getBoardJson(self) :
+        dictBoard = {}
+        for row in range(len(self.board)) :
+            for cell in range(len(self.board[row])) :
+                if(self.board[row][cell] != ' ') :
+                    dictBoard[str(row) + str(cell)] = self.board[row][cell]
+        return dumps(dictBoard)
 
-test = chess('player1','player2')
-test.affBoard()
-test.play()
+test = Chess('player1','player2')
+# test.affBoard()
+# test.play()
+test.getBoardJson()
