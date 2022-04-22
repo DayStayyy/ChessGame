@@ -8,4 +8,5 @@ build-code-job:
     - echo "Lancement de l'application"
     - pip install flask
     - python test.py
-    - app.stop
+    - sleep 100
+    - ^C
