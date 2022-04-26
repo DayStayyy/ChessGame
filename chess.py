@@ -131,7 +131,7 @@ class Chess :
                     dictBoard[str(row) + str(cell)] = self.board[row][cell]
         return dumps(dictBoard)
 
-test = Chess('player1','player2')
+# test = Chess('player1','player2')
 # test.affBoard()
 # test.play()
-test.getBoardJson()
+# test.getBoardJson()
