@@ -23,6 +23,7 @@ function getPiecesColor(piece) {
 
 
 function createBoard() {
+  board = document.createElement('div');
   for (var row = 0; row < 8; row++) {
     var rowEl = document.createElement('tr');
     for (var cell = 0; cell < 8; cell++) { 
@@ -37,7 +38,8 @@ function createBoard() {
       button.appendChild(cellEl);
       rowEl.appendChild(button);
     }
-    chessboard.appendChild(rowEl);
+    board.appendChild(rowEl);
+    chessboard.appendChild(board);
   }
 }
 
@@ -77,7 +79,7 @@ function setPieceData (el, color, type) {
   el.classList.add(type); 
 }
 
-async function resetBoard () {
+async function placePieces () {
   piecePos = JSON.parse(await getBoardJson());
   for ([key, value] of Object.entries(piecePos)) {
 
@@ -90,9 +92,16 @@ async function resetBoard () {
 async function start() {
 
   //createTablebuttons();
-   createBoard();
-  resetBoard();
+  createBoard();
+  placePieces();
 
+}
+
+async function resetBoard()
+{
+  document.querySelector('div').remove();
+  createBoard();
+  placePieces();
 }
 
 start();
