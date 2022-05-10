@@ -34,4 +34,11 @@ def playPieces():
         return "true"
     return "false"
 
-    
+@app.route('/api/reset')     
+def reset():
+    game = Chess('player1','player2')
+    board = game.getBoardJson()
+    jsonFile = open("data/board.json", "w")
+    jsonFile.write(board)
+    jsonFile.close()
+    return "true"
