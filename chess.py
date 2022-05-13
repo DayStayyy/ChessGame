@@ -6,30 +6,30 @@ class Chess :
         self.player1 = player1
         self.player2 = player2
         self.board = [[' ' for i in range(8)] for j in range(8)]
-        # self.board[0][0] = 'R'
-        # self.board[0][1] = 'N'
-        # self.board[0][2] = 'B'
-        # self.board[0][3] = 'Q'
+        self.board[0][0] = 'R'
+        self.board[0][1] = 'N'
+        self.board[0][2] = 'B'
+        self.board[0][3] = 'Q'
         self.board[0][4] = 'K'
-        # self.board[0][5] = 'B'
-        # self.board[0][6] = 'N'
-        # self.board[0][7] = 'R'
-        # self.board[1][0] = 'P'
-        # self.board[1][1] = 'P'
-        # self.board[1][2] = 'P'
-        # self.board[1][3] = 'P'
-        # self.board[1][4] = 'P'
-        # self.board[1][5] = 'P'
-        # self.board[1][6] = 'P'
-        # self.board[1][7] = 'P'
-        # self.board[7][0] = 'r'
-        # self.board[7][1] = 'n'
-        # self.board[7][2] = 'b'
-        # self.board[7][3] = 'q'
+        self.board[0][5] = 'B'
+        self.board[0][6] = 'N'
+        self.board[0][7] = 'R'
+        self.board[1][0] = 'P'
+        self.board[1][1] = 'P'
+        self.board[1][2] = 'P'
+        self.board[1][3] = 'P'
+        self.board[1][4] = 'P'
+        self.board[1][5] = 'P'
+        self.board[1][6] = 'P'
+        self.board[1][7] = 'P'
+        self.board[7][0] = 'r'
+        self.board[7][1] = 'n'
+        self.board[7][2] = 'b'
+        self.board[7][3] = 'q'
         self.board[7][4] = 'k'
-        # self.board[7][5] = 'b'
-        # self.board[7][6] = 'n'
-        # self.board[7][7] = 'r'
+        self.board[7][5] = 'b'
+        self.board[7][6] = 'n'
+        self.board[7][7] = 'r'
         # self.board[6][0] = 'p'
         # self.board[6][1] = 'p'
         # self.board[6][2] = 'p'
@@ -155,6 +155,8 @@ class Chess :
                 print("Valid check")
                 self.board = checkBoard
                 self.turn += 1
+                if(self.isCheckMate()) :
+                    print("Checkmate")
                 return True
             print("Invalid check")
             return False
@@ -175,15 +177,13 @@ class Chess :
             return True
         return False
     
-    def isCheckMate(self) :
-        pass
     def kingPos(self,checkBoard) :
         self.affBoardTest(checkBoard)
         for i in range(len(checkBoard)) :
             for j in range(len(checkBoard[i])) :
                 if checkBoard[i][j] == self.playerPieceList[self.turn%2][4] :
                     return [i,j]
-        
+    
     def isCheck(self,checkBoard) :
         kingPosition = self.kingPos(checkBoard)
         testLeft = kingPosition[0]
@@ -292,7 +292,38 @@ class Chess :
                     break        
         
         return True
-         
+    
+    #function check all possible move for the current player king with isCheck
+    def isCheckMate(self) :
+        checkBoard = copy.deepcopy(self.board)
+        for i in range(0,8) :
+            for j in range(0,8) :
+                if checkBoard[i][j] == self.playerPieceList[self.turn%2][4] :
+                    if self.isCheck(checkBoard) :
+                        return False
+                    else :
+                        for k in range(0,8) :
+                            for l in range(0,8) :
+                                if checkBoard[k][l] == self.playerPieceList[self.turn%2][4] :
+                                    checkBoard[k][l] = ' '
+                                    for m in range(-1,2) :
+                                        for n in range(-1,2) :
+                                            if k+m < 0 or k+m > 7 or l+n < 0 or l+n > 7 :
+                                                continue
+                                            elif checkBoard[k+m][l+n] == ' ' or checkBoard[k+m][l+n] not in self.playerPieceList[self.turn%2] :
+                                                lastValue = checkBoard[k+m][l+n]
+                                                checkBoard[k+m][l+n] = self.playerPieceList[self.turn%2][4]
+                                                if self.isCheck(checkBoard) :
+                                                    checkBoard[k][l] = ' '
+                                                    checkBoard[k+m][l+n] = lastValue
+                                                    return False
+                                                else :
+                                                    checkBoard[k][l] = ' '
+                                                    checkBoard[k+m][l+n] = lastValue
+                                                    continue
+                                    return True
+        return True
+
 
     def play(self) :
         start = (input("Enter the position of the piece you want to move : " ))
