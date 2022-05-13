@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS users (
+    user_id int AUTO_INCREMENT PRIMARY KEY,
+    pseudo VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rank int
+)  ENGINE=INNODB;
