@@ -7,5 +7,5 @@ build-code-job:
   script:
     - echo "Lancement de l'application"
     - pip install flask
-    - python -m flask run
+    # - python -m flask run
     - ^C
