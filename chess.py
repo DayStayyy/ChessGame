@@ -1,42 +1,43 @@
 from json import dumps
+import copy
 
 class Chess :
     def __init__(self,player1,player2) :
         self.player1 = player1
         self.player2 = player2
         self.board = [[' ' for i in range(8)] for j in range(8)]
-        self.board[0][0] = 'R'
-        self.board[0][1] = 'N'
-        self.board[0][2] = 'B'
-        self.board[0][3] = 'Q'
+        # self.board[0][0] = 'R'
+        # self.board[0][1] = 'N'
+        # self.board[0][2] = 'B'
+        # self.board[0][3] = 'Q'
         self.board[0][4] = 'K'
-        self.board[0][5] = 'B'
-        self.board[0][6] = 'N'
-        self.board[0][7] = 'R'
-        self.board[1][0] = 'P'
-        self.board[1][1] = 'P'
-        self.board[1][2] = 'P'
-        self.board[1][3] = 'P'
-        self.board[1][4] = 'P'
-        self.board[1][5] = 'P'
-        self.board[1][6] = 'P'
-        self.board[1][7] = 'P'
-        self.board[7][0] = 'r'
-        self.board[7][1] = 'n'
-        self.board[7][2] = 'b'
-        self.board[7][3] = 'q'
+        # self.board[0][5] = 'B'
+        # self.board[0][6] = 'N'
+        # self.board[0][7] = 'R'
+        # self.board[1][0] = 'P'
+        # self.board[1][1] = 'P'
+        # self.board[1][2] = 'P'
+        # self.board[1][3] = 'P'
+        # self.board[1][4] = 'P'
+        # self.board[1][5] = 'P'
+        # self.board[1][6] = 'P'
+        # self.board[1][7] = 'P'
+        # self.board[7][0] = 'r'
+        # self.board[7][1] = 'n'
+        # self.board[7][2] = 'b'
+        # self.board[7][3] = 'q'
         self.board[7][4] = 'k'
-        self.board[7][5] = 'b'
-        self.board[7][6] = 'n'
-        self.board[7][7] = 'r'
-        self.board[6][0] = 'p'
-        self.board[6][1] = 'p'
-        self.board[6][2] = 'p'
-        self.board[6][3] = 'p'
-        self.board[6][4] = 'p'
-        self.board[6][5] = 'p'
-        self.board[6][6] = 'p'
-        self.board[6][7] = 'p'
+        # self.board[7][5] = 'b'
+        # self.board[7][6] = 'n'
+        # self.board[7][7] = 'r'
+        # self.board[6][0] = 'p'
+        # self.board[6][1] = 'p'
+        # self.board[6][2] = 'p'
+        # self.board[6][3] = 'p'
+        # self.board[6][4] = 'p'
+        # self.board[6][5] = 'p'
+        # self.board[6][6] = 'p'
+        # self.board[6][7] = 'p'
         self.turn = 0
         self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
         
@@ -133,21 +134,31 @@ class Chess :
                 return True
         elif self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][4] :
             if self.board[positionEnd[0]][positionEnd[1]] not in self.playerPieceList[self.turn%2]:
-                if positionStart[0] == positionEnd[0] and positionStart[1] == positionEnd[1] + (1 if positionStart[1] < positionEnd[1] else -1) :
-                    return True
-                elif positionStart[0] == positionEnd[0] + (1 if positionStart[1] < positionEnd[1] else -1) and positionStart[1] == positionEnd[1] :
-                    return True
-                elif positionStart[0] == positionEnd[0] + (1 if positionStart[1] < positionEnd[1] else -1) and positionStart[1] == positionEnd[1] + (1 if positionStart[1] < positionEnd[1] else -1) :
+                if positionStart[0] == positionEnd[0] :
+                    if positionStart[1] == positionEnd[1] + (1 if positionStart[1] > positionEnd[1] else -1) :
+                        return True
+                elif positionStart[1] == positionEnd[1]  :
+                    if positionStart[0] == positionEnd[0] + (1 if positionStart[0] > positionEnd[0] else -1) :
+                        return True
+                elif positionStart[0] == positionEnd[0] + (1 if positionStart[0] > positionEnd[0] else -1) and positionStart[1] == positionEnd[1] + (1 if positionStart[1] > positionEnd[1] else -1) :
                     return True
             return False  
                 
 
     def playPieces(self,positionStart,positionEnd):
         if(self.isValidMove(positionStart,positionEnd)):
-            self.board[positionEnd[0]][positionEnd[1]] = self.board[positionStart[0]][positionStart[1]]
-            self.board[positionStart[0]][positionStart[1]] = ' '
-            self.turn += 1
-            return True
+            print("Valid Move")
+            checkBoard = copy.deepcopy(self.board)
+            checkBoard[positionEnd[0]][positionEnd[1]] = checkBoard[positionStart[0]][positionStart[1]]
+            checkBoard[positionStart[0]][positionStart[1]] = ' '
+            if self.isCheck(checkBoard) :
+                print("Valid check")
+                self.board = checkBoard
+                self.turn += 1
+                return True
+            print("Invalid check")
+            return False
+        print("Invalid Move")
         return False
 
 
@@ -155,6 +166,133 @@ class Chess :
         print("   ",['0', '1', '2', '3', '4', '5', '6', '7'])
         for i in range(8) :
             print(i, " ",self.board[i])
+    def affBoardTest(self,board) :
+        print("   ",['0', '1', '2', '3', '4', '5', '6', '7'])
+        for i in range(8) :
+            print(i, " ",board[i])
+    def isGameOver(self) :
+        if self.turn == 64 :
+            return True
+        return False
+    
+    def isCheckMate(self) :
+        pass
+    def kingPos(self,checkBoard) :
+        self.affBoardTest(checkBoard)
+        for i in range(len(checkBoard)) :
+            for j in range(len(checkBoard[i])) :
+                if checkBoard[i][j] == self.playerPieceList[self.turn%2][4] :
+                    return [i,j]
+        
+    def isCheck(self,checkBoard) :
+        kingPosition = self.kingPos(checkBoard)
+        testLeft = kingPosition[0]
+        testRight = kingPosition[0]
+        while testLeft > 0 :
+            testLeft -= 1
+            if checkBoard[testLeft][kingPosition[1]] != ' ' :
+                if checkBoard[testLeft][kingPosition[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testLeft][kingPosition[1]] in "QRqr"  : 
+                    return False
+                elif abs(testLeft-kingPosition[0]) == 1 and checkBoard[testLeft][kingPosition[1]] in "Kk" :
+                    return False
+                else :
+                    break
+        while testRight < 7 :
+            testRight += 1
+            if checkBoard[testRight][kingPosition[1]] != ' ' :
+                if checkBoard[testRight][kingPosition[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testRight][kingPosition[1]] in "QRqr" :
+                    return False
+                elif  abs(testRight-kingPosition[0]) == 1 and checkBoard[testRight][kingPosition[1]] in "Kk" :
+                    return False
+                else :
+                    break
+    
+    
+        testUp = kingPosition[1]
+        testDown = kingPosition[1]
+
+        while testUp > 0 :
+            testUp -= 1
+            if checkBoard[kingPosition[0]][testUp] != ' ' :
+                if checkBoard[kingPosition[0]][testUp] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[kingPosition[0]][testUp] in "QRqr"  :
+                    return False
+                elif abs(testUp-kingPosition[1]) == 1  and checkBoard[kingPosition[0]][testUp] in "Kk" :
+                    return False
+                else :
+                    break
+        while testDown < 7 :
+            testDown += 1
+            if checkBoard[kingPosition[0]][testDown] != ' ' :
+                if checkBoard[kingPosition[0]][testDown] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[kingPosition[0]][testDown] in "QRqr"  :
+                    return False
+                elif abs(testDown-kingPosition[1]) == 1 and checkBoard[kingPosition[0]][testDown] in "Kk" :
+                    return False
+                else :
+                    break
+
+        testUpLeft = kingPosition.copy()
+        testUpRight = kingPosition.copy()
+        testDownLeft = kingPosition.copy()
+        testDownRight = kingPosition.copy()
+        while testUpLeft[0] > 0 and testUpLeft[1] > 0 :
+            testUpLeft[0] -= 1
+            testUpLeft[1] -= 1
+            if checkBoard[testUpLeft[0]][testUpLeft[1]] != ' ' :
+                if checkBoard[testUpLeft[0]][testUpLeft[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testUpLeft[0]][testUpLeft[1]] in "QBqb"  :
+                    return False
+                elif abs(testUpLeft[0]-kingPosition[0]) and abs(testUpLeft[1]-kingPosition[1]) and checkBoard[testUpLeft[0]][testUpLeft[1]] in "Kk" :
+                    return False
+                else :
+                    break
+        while testUpRight[0] > 0 and testUpRight[1] < 7 :
+            testUpRight[0] -= 1
+            testUpRight[1] += 1
+            if checkBoard[testUpRight[0]][testUpRight[1]] != ' ' :
+                if checkBoard[testUpRight[0]][testUpRight[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testUpRight[0]][testUpRight[1]] in "QBqb" :
+                    return False
+                elif abs(testUpRight[0]-kingPosition[0]) and abs(testUpRight[1]-kingPosition[1]) and checkBoard[testUpRight[0]][testUpRight[1]] in "Kk" :
+                    return False
+                else :
+                    break
+        while testDownLeft[0] < 7 and testDownLeft[1] > 0 :
+            testDownLeft[0] += 1
+            testDownLeft[1] -= 1
+            if checkBoard[testDownLeft[0]][testDownLeft[1]] != ' ' :
+                if checkBoard[testDownLeft[0]][testDownLeft[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testDownLeft[0]][testDownLeft[1]] in "QBqb"  :
+                    return False
+                elif  abs(testDownLeft[0]-kingPosition[0]) and abs(testDownLeft[1]-kingPosition[1]) and checkBoard[testDownLeft[0]][testDownLeft[1]] in "Kk" :
+                    return False
+                else :
+                    break
+        while testDownRight[0] < 7 and testDownRight[1] < 7 :
+            testDownRight[0] += 1
+            testDownRight[1] += 1
+            if checkBoard[testDownRight[0]][testDownRight[1]] != ' ' :
+                if checkBoard[testDownRight[0]][testDownRight[1]] in self.playerPieceList[self.turn%2] :
+                    break
+                elif checkBoard[testDownRight[0]][testDownRight[1]] in "QBqb" :
+                    return False
+                elif abs(testDownRight[0]-kingPosition[0]) and abs(testDownRight[1]-kingPosition[1]) and checkBoard[testDownRight[0]][testDownRight[1]] in "Kk" :
+                    return False
+                else :
+                    break        
+        
+        return True
+         
 
     def play(self) :
         start = (input("Enter the position of the piece you want to move : " ))
