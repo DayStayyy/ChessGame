@@ -81,7 +81,20 @@ def menu():
         return redirect(url_for('sign_out'))
     return render_template('menu.html', error=error)
 
+@app.route('/option', methods=['GET', 'POST'])
+def option():
+    error = None
+    if not session.get('name'):
+        return redirect('/login')
+    return render_template('option.html')
 @app.route('/sign_out')
 def sign_out():
     session.pop('name')
     return redirect(url_for('login'))
+
+@app.route('/api/checkmate')     
+def checkmate():
+    if(game.isCheckMate()) :
+        print("checkmate")
+        return "true"
+    return "false"
