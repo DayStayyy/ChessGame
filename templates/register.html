@@ -23,10 +23,10 @@
           request.form.password }}"><br><br><br><br>
         <input class="btn btn-default" type="submit" placeholder="Register" value="Register">
         <p><a href="{{ url_for('login') }}">Already have an account ?</a></p>
-      </form>
-      {% if error %}
+        {% if error %}
         <p class="error"><strong>Error:</strong> {{ error }}
-      {% endif %}
+        {% endif %}
+      </form> 
     </div>
   </body>
 </html>
