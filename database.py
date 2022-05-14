@@ -1,9 +1,8 @@
 import os
-import dotenv
 import mysql.connector
 import bcrypt 
 
-dotenv.load_dotenv()
+
 mydb = mysql.connector.connect(
     host="localhost",
     user="benji",
