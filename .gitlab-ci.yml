@@ -1,11 +1,19 @@
+image: python:3
+
 stages:
   - build
+  - deploy
 
 build-code-job:
   stage: build
-  image: python:3
   script:
     - echo "Lancement de l'application"
-    - pip install flask
-    # - python -m flask run
-    - ^C
+    - apt-get update -qy
+    - apt-get install -qq git
+    - pip install -r requirements.txt
+    - bash script.sh
+
+deploy-code-job:
+  stage: deploy
+  script:
+    - echo "Déploiement de l'application"
