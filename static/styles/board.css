@@ -1,20 +1,40 @@
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
 #chessboard {
-    padding: 0px;
-    margin: 0 auto;
-    border: 2px solid #181818;
-    border-collapse: collapse;
-  }
-  #chessboard tr td {
-    width: 60px;
-    height: 60px;
-  }
-  #chessboard tr:nth-child(2n) td:nth-child(2n+1) {
-    background: #9f9f9f;
-  }
-  #chessboard tr:nth-child(2n+1) td:nth-child(2n) {
-    background: #9f9f9f;
-  }
-  /*
+  padding: 0px;
+  margin: 0 auto;
+  border: 2px solid #181818;
+  border-collapse: collapse;
+}
+#chessboard tr td {
+  width: 60px;
+  height: 60px;
+}
+#chessboard tr:nth-child(2n) td:nth-child(2n + 1) {
+  background: #9f9f9f;
+}
+#chessboard tr:nth-child(2n + 1) td:nth-child(2n) {
+  background: #9f9f9f;
+}
+/*
     The following rules will use the unicode font symbols for chess pieces. They look like this:
       white chess king    ♔   U+2654
       white chess queen   ♕   U+2655
@@ -34,76 +54,75 @@
     text for that respective chess piece, as well as the font size, line-height for the font, and
     some padding to try and center the chess piece in the <td> element.
   */
-  #chessboard .king.black:after {
-    content: "\265A";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .king.white:after {
-    content: "\2654";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .queen.black:after {
-    content: "\265B";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .queen.white:after {
-    content: "\2655";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .rook.black:after {
-    content: "\265C";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .rook.white:after {
-    content: "\2656";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .bishop.black:after {
-    content: "\265D";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .bishop.white:after {
-    content: "\2657";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .knight.black:after {
-    content: "\265E";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .knight.white:after {
-    content: "\2658";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .pawn.black:after {
-    content: "\265F";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .pawn.white:after {
-    content: "\2659";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  
+#chessboard .king.black:after {
+  content: "\265A";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .king.white:after {
+  content: "\2654";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.black:after {
+  content: "\265B";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.white:after {
+  content: "\2655";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.black:after {
+  content: "\265C";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.white:after {
+  content: "\2656";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.black:after {
+  content: "\265D";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.white:after {
+  content: "\2657";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.black:after {
+  content: "\265E";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.white:after {
+  content: "\2658";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.black:after {
+  content: "\265F";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.white:after {
+  content: "\2659";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}

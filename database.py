@@ -1,9 +1,9 @@
 import os
-import dotenv
+# import dotenv
 import mysql.connector
 import bcrypt 
 
-dotenv.load_dotenv()
+# dotenv.load_dotenv()
 mydb = mysql.connector.connect(
     host="localhost",
     user="benji",
@@ -44,4 +44,20 @@ def verify_password(username, password):
     if bcrypt.checkpw(password.encode('utf-8'), res.encode('utf-8')):
         return True
     return False
-    
+
+def getUserPoints(username):
+    mycursor = mydb.cursor()
+    sql = "SELECT rankedpoints FROM users WHERE pseudo = %s"
+    val = (username, )
+    mycursor.execute(sql, val)
+    myresult = mycursor.fetchone()
+    res = str(myresult[0])
+    return res
+
+def editProfil(username, password):
+    mycursor = mydb.cursor()
+    hashedpassword = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    sql = "INSERT INTO users (pseudo, password) VALUES (%s)"
+    val = (username, )
+    mycursor.execute(sql, val)
+    mydb.commit()

@@ -1,12 +1,21 @@
-<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/board.css') }}">
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{ url_for('static',filename='styles/board.css') }}"
+/>
 
 <html>
   <head>
     <title>Chessboard</title>
   </head>
+  <navbar>
+    <ul>
+      <li><a class="active" href="{{ url_for('profil') }}">Profil</a></li>
+    </ul>
+  </navbar>
   <body>
     <h1>{{ session['name'] }}</h1>
-    <table id='chessboard'></table>
+    <table id="chessboard"></table>
     <script src="{{url_for('static', filename='js/board.js')}}"></script>
-  </body>  
+  </body>
 </html>

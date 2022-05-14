@@ -2,7 +2,7 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import insert_user,verify_password
+from database import insert_user,verify_password,getUserPoints
 from chess import Chess
 
 app = Flask(__name__)
@@ -70,3 +70,22 @@ def register():
             print("erreur de register")
     return render_template('register.html', error=error)
 
+@app.route('/profil', methods=['GET', 'POST'])
+def profil():
+    session["points"] = getUserPoints(session["name"])
+    error = None
+    if not session.get('name'):
+        return redirect('/login')
+    return render_template('profil.html', error=error)
+
+@app.route('/editProfil', methods=['GET', 'POST'])
+def editProfil():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] or request.form['password'] :
+           verify_password(request.form['username'],request.form['password'])
+           insert_user(request.form['username'], request.form['password']) 
+           return redirect(url_for('editProfil'))
+        else:
+            print("erreur de register")
+    return render_template('editProfil.html', error=error)
