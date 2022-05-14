@@ -49,24 +49,9 @@ def reset():
     jsonFile.close()
     return "true"
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if verify_password(request.form['username'],request.form['password']) == True:
-            session["name"] = request.form.get("username")
-            return redirect('/')
-        return render_template('login.html', error=error)
-    return render_template('login.html', error=error)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] or request.form['password'] :
-           insert_user(request.form['username'], request.form['password']) 
-           return redirect(url_for('login'))
-        else:
-            print("erreur de register")
-    return render_template('register.html', error=error)
-
+@app.route('/api/checkmate')     
+def checkmate():
+    if(game.isCheckMate()) :
+        print("checkmate")
+        return "true"
+    return "false"
