@@ -55,7 +55,7 @@ def login():
     if request.method == 'POST':
         if verify_password(request.form['username'],request.form['password']) == True:
             session["name"] = request.form.get("username")
-            return redirect('/')
+            return redirect('/menu')
         return render_template('login.html', error=error)
     return render_template('login.html', error=error)
 
@@ -70,3 +70,18 @@ def register():
             print("erreur de register")
     return render_template('register.html', error=error)
 
+@app.route('/menu', methods=['GET', 'POST'])
+def menu():
+    error = None
+    if not session.get('name'):
+        return redirect('/login')
+    if request.method == 'POST':
+        return redirect(url_for('home'))
+    if request.method == 'logout':
+        return redirect(url_for('sign_out'))
+    return render_template('menu.html', error=error)
+
+@app.route('/sign_out')
+def sign_out():
+    session.pop('name')
+    return redirect(url_for('login'))
