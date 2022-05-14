@@ -155,8 +155,6 @@ class Chess :
                 print("Valid check")
                 self.board = checkBoard
                 self.turn += 1
-                if(self.isCheckMate()) :
-                    print("Checkmate")
                 return True
             print("Invalid check")
             return False
@@ -293,7 +291,7 @@ class Chess :
         
         return True
     
-    #function check all possible move for the current player king with isCheck
+
     def isCheckMate(self) :
         checkBoard = copy.deepcopy(self.board)
         for i in range(0,8) :

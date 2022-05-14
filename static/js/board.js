@@ -7,9 +7,9 @@ pieceType.set("b", "bishop");
 pieceType.set("q", "queen");
 pieceType.set("k", "king");
 pieceType.set("p", "pawn");
-
-var position = [];
-
+gameIsOver = false;
+var positionArr = [];
+var currentPlayer = 1;
 function getPiecesType(piece) {
   return pieceType.get(piece.toLowerCase());
 }
@@ -43,22 +43,41 @@ function createBoard() {
   }
 }
 
-async function addPose(document) 
+async function addPose(elem) 
 {
-  position.push(document.dataset.position);
-  if(position.length == 2) {
-    console.log("position: " + position);
+  var position = elem.dataset.position;
+  var pieceEl = elem.querySelector('td[data-position="' + position + '"]');
+  var piece = pieceEl.className;
+  console.log(piece);
+  if(piece != '' || (piece == '' && positionArr.length > 0)) {
+    console.log("yo")
+    positionArr.push(elem.dataset.position);
+    if(positionArr.length == 2) {
+      console.log("position: " + positionArr);
 
-    var data = await fetch("/api/playPieces?from=" + position[0] + "&to=" + position[1])
-    .then(response => {
-      return response.json();
-    })
-    console.log(data);
-    if(data == true) {
-      console.log("success");
-      resetBoard();
+      var data = await fetch("/api/playPieces?from=" + positionArr[0] + "&to=" + positionArr[1])
+      .then(response => {
+        return response.json();
+      })
+      console.log(data);
+      if(data == true) {
+        console.log("success");
+        await resetBoard();
+        test = await isCheckMate()
+        console.log("test"+test);
+        if(test == true) {
+          alert("Checkmate");
+          const states = document.getElementById('states');
+          states.innerHTML = "Le jeu est terminé, le joueur ${currentPlayer} a gagné";
+        } else {
+          currentPlayer = currentPlayer == 1 ? 2 : 1;
+          const states = document.getElementById('states');
+          states.innerHTML = "C'est au tour du joueur "+currentPlayer;
+        }
+
+      }
+      positionArr = [];
     }
-    position = [];
   }
 }
 
@@ -69,6 +88,17 @@ async function getBoardJson() {
   })
   .then(jsondata => {
     return jsondata;});
+  return data;
+}
+
+async function isCheckMate() {
+  var data = await fetch("/api/checkmate")
+  .then(response => {
+    return response.json();
+  })
+  .then(jsondata => {
+    return jsondata;});
+  console.log("checkmate : "+data);
   return data;
 }
 

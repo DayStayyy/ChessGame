@@ -42,3 +42,10 @@ def reset():
     jsonFile.write(board)
     jsonFile.close()
     return "true"
+
+@app.route('/api/checkmate')     
+def checkmate():
+    if(game.isCheckMate()) :
+        print("checkmate")
+        return "true"
+    return "false"
