@@ -2,22 +2,32 @@
   <head>
     <title>login page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="static/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/login.css') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="container">
-      <h1>Please login</h1>
       <br>
-      <form action="" method="post">
-        <input type="text" placeholder="Username" name="username" value="{{
-          request.form.username }}">
-         <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}">
-        <input class="btn btn-default" type="submit" value="Login">
+      <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <form class="registerForm" action="" method="post">
+        <h1 style="color:white;">Chessgame</h1> 
+        <h3>Please login</h3>
+        <input type="text" placeholder="Username" name="username" minlength="4" value="{{
+          request.form.username }}"><br><br>
+         <input type="password" placeholder="Password" minlength="4" name="password" value="{{
+          request.form.password }}"><br><br><br><br>
+        <input class="button1" type="submit" value="Login">
+        <p><a href="{{ url_for('register') }}">New account ?</a></p>
+        {% if error %}
+          <h1 class="error"><strong>Mauvais mot de passe ou utilisateur</strong></h1> {{ error }}
+        {% endif %}
       </form>
-      {% if error %}
-        <h1 class="error"><strong>Mauvais mot de passe ou utilisateur</strong></h1> {{ error }}
-      {% endif %}
+      
     </div>
   </body>
 </html>
