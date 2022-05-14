@@ -2,9 +2,10 @@
 
 <html>
   <head>
-    <title>Javascript Chessboard with Pieces</title>
+    <title>Chessboard</title>
   </head>
   <body>
+    <h1>{{ session['name'] }}</h1>
     <table id='chessboard'></table>
     <script src="{{url_for('static', filename='js/board.js')}}"></script>
   </body>  
