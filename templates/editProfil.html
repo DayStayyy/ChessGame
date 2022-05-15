@@ -1,3 +1,4 @@
+
 <html>
   <head>
     <title>Edit Profil page</title>
@@ -6,13 +7,18 @@
       rel="stylesheet"
       type="text/css"
       href="{{ url_for('static',filename='styles/editProfil.css') }}"
+      
     />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/topnav.css') }}">
+
   </head>
-  <navbar>
-    <ul class="nav">
-      <li><a class="active" href="{{ url_for('home') }}">Accueil</a></li>
-    </ul>
-  </navbar>
+  <section class="topnav">
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('profil') }}">Profile</a>
+    <a href="{{ url_for('chooseLevel') }}">Jouer</a>
+    <a href="{{ url_for('allGames') }}">Mes Parties</a>
+    <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
+  </section>
   <body>
     <div class="container">
       <br />

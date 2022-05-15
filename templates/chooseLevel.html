@@ -5,11 +5,19 @@
     <title>Game menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/menu.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/topnav.css') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    <section class="topnav">
+      <a href="{{ url_for('menu') }}">Menu</a>
+      <a href="{{ url_for('profil') }}">Profile</a>
+      <a href="{{ url_for('chooseLevel') }}">Jouer</a>
+      <a href="{{ url_for('allGames') }}">Mes Parties</a>
+      <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
+    </section>
     <div class="container">
       <br>
       <div class="background">

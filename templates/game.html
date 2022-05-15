@@ -6,10 +6,11 @@
   </head>
   <body>
     <section class="topnav">
-      <a href="{{ url_for('menu') }}">menu</a>
-      <a href="">profile</a>
-      <a href="">1VSIA</a>
-      <a href="{{ url_for('sign_out') }}" class="split">logout</a>
+      <a href="{{ url_for('menu') }}">Menu</a>
+      <a href="{{ url_for('profil') }}">Profile</a>
+      <a href="{{ url_for('chooseLevel') }}">Jouer</a>
+      <a href="{{ url_for('allGames') }}">Mes Parties</a>
+      <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
     </section>
     <section class="background">
       <section class="shape"></section>

@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   </head>
   <body>
+    
     <div class="container">
       <br>
       <div class="background">
@@ -18,7 +19,7 @@
         <h1 style="color:white;">Chessgame</h1> 
         <h3>Menu</h3>
         <p class="registerbutton"><a href="{{ url_for('chooseLevel') }}">jouer</a></p>
-        <p class="button"><a style="position:center" href="{{ url_for('menu') }}">option</a></p>
+        <p class="button"><a style="position:center" href="{{ url_for('profil') }}">profile</a></p>
         <p class="button"><a href="{{ url_for('sign_out') }}">logout</a></p>
         <p class="button"><a href="{{ url_for('allGames') }}">All games</a></p>
         {% if error %}

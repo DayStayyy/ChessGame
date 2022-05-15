@@ -3,16 +3,19 @@
   type="text/css"
   href="{{ url_for('static',filename='styles/board.css') }}"
 />
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/topnav.css') }}">
 
 <html>
   <head>
     <title>Chessboard</title>
   </head>
-  <navbar>
-    <ul>
-      <li><a class="active" href="{{ url_for('profil') }}">Profil</a></li>
-    </ul>
-  </navbar>
+  <section class="topnav">
+    <a href="{{ url_for('menu') }}">Menu</a>
+    <a href="{{ url_for('profil') }}">Profile</a>
+    <a href="{{ url_for('chooseLevel') }}">Jouer</a>
+    <a href="{{ url_for('allGames') }}">Mes Parties</a>
+    <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
+  </section>
   <body>
     <h1>{{ session['name'] }}</h1>
     <table id="chessboard"></table>

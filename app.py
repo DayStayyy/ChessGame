@@ -2,11 +2,10 @@
 from importlib.resources import path
 from json import dumps
 import time
-from chessgame.database import editUser, getUserPoints
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
+from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames,getUserPoints,editUser
 import chess
 import chess.engine
 from Mychess import Chess
@@ -141,8 +140,6 @@ def menu():
     error = None
     if not session.get('name'):
         return redirect('/login')
-    if request.method == 'POST':
-        return redirect(url_for('home'))
     if request.method == 'logout':
         return redirect(url_for('sign_out'))
     return render_template('menu.html', error=error)
@@ -160,7 +157,7 @@ def sign_out():
 
 @app.route('/api/checkmate')     
 def checkmate():
-    time.sleep(1)
+    time.sleep(0.5)
     gameId = request.args.get('gameId')
     game = getGame(gameId)
     fen = jsonToFen(game[3])
@@ -235,11 +232,13 @@ def deleteGames():
         deleteGame(session['id'],gameId)
         return redirect(url_for('allGames'))
     return render_template('gamesBoard.html')
+
 @app.route('/profil', methods=['GET', 'POST'])
 def profil():
-    session["points"] = getUserPoints(session["name"])
+    print("profil")
     error = None
     if not session.get('name'):
+        session["points"] = getUserPoints(session["name"])
         return redirect('/login')
     return render_template('profil.html', error=error)
 
