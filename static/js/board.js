@@ -54,8 +54,10 @@ async function addPose(elem)
     positionArr.push(elem.dataset.position);
     if(positionArr.length == 2) {
       console.log("position: " + positionArr);
-
-      var data = await fetch("/api/playPieces?from=" + positionArr[0] + "&to=" + positionArr[1])
+      var url = new URL(window.location.href);
+      var gameId = url.searchParams.get("gameId");
+      console.log("gameId : " + gameId);
+      var data = await fetch("/api/playPieces?from=" + positionArr[0] + "&to=" + positionArr[1]+ "&gameId=" + gameId)
       .then(response => {
         return response.json();
       })
@@ -68,7 +70,7 @@ async function addPose(elem)
         if(test == true) {
           alert("Checkmate");
           const states = document.getElementById('states');
-          states.innerHTML = "Le jeu est terminé, le joueur ${currentPlayer} a gagné";
+          states.innerHTML = "Le jeu est terminé, le joueur "+ currentPlayer + " à gagné";
         } else {
           currentPlayer = currentPlayer == 1 ? 2 : 1;
           const states = document.getElementById('states');
@@ -82,7 +84,11 @@ async function addPose(elem)
 }
 
 async function getBoardJson() {
-  var data = await fetch("/api/board")
+  // get arguments from the url
+  var url = new URL(window.location.href);
+  var gameId = url.searchParams.get("gameId");
+  console.log("gameId : " + gameId);
+  var data = await fetch("/api/board?gameId=" + gameId)
   .then(response => {
     return response.json();
   })
