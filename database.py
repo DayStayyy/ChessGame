@@ -104,19 +104,13 @@ def addTurn(gameId, turn):
     val = (turn, gameId)
     mycursor.execute(sql, val)
     mydb.commit()
+
 def deleteGame(userId, gameId) :
     mycursor = mydb.cursor()
     sql = "DELETE FROM games WHERE playerId = %s AND gameId = %s"
     val = (userId, gameId)
-    val = (username, )
     mycursor.execute(sql, val)
-    myresult = mycursor.fetchone()
-    print(myresult)
-    if myresult is not None :
-        if bcrypt.checkpw(password.encode('utf-8'), myresult[2].encode('utf-8')):
-            return True, myresult[0]
-    return False, -1
-
+    
 def getUserPoints(username):
     mycursor = mydb.cursor()
     sql = "SELECT rankedpoints FROM users WHERE pseudo = %s"
