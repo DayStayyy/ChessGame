@@ -220,3 +220,12 @@ def chooseLevel():
     if not session.get('name') and not session.get('id'):
         return redirect('/login')
     return render_template('chooseLevel.html')
+@app.route('/deleteGames', methods=['GET', 'POST'])
+def deleteGames():
+    if not session.get('name'):
+        return redirect('/login')
+    if request.args.get('gameId'):
+        gameId = request.args.get('gameId')
+        deleteGame(session['id'],gameId)
+        return redirect(url_for('allGames'))
+    return render_template('gamesBoard.html')

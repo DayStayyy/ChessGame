@@ -95,5 +95,9 @@ def addTurn(gameId, turn):
     mycursor = mydb.cursor()
     sql = "UPDATE games SET turn = %s WHERE gameId = %s"
     val = (turn, gameId)
+def deleteGame(userId, gameId) :
+    mycursor = mydb.cursor()
+    sql = "DELETE FROM games WHERE playerId = %s AND gameId = %s"
+    val = (userId, gameId)
     mycursor.execute(sql, val)
     mydb.commit()
