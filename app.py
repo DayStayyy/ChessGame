@@ -12,6 +12,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = b'_5#y2L"F4Q8z\n\xec]/'
 game = Chess('player1','player2')
 
+
 @app.route('/', methods=['GET', 'POST'])     
 def home():
     if not session.get('name'):

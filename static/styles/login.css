@@ -16,10 +16,10 @@ left: 50%;
 top: 50%;
 }
 .background .shape{
-height: 200px;
-width: 200px;
-position: absolute;
-border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    border-radius: 50%;
 }
 .shape:first-child{
 background: linear-gradient(
@@ -59,7 +59,7 @@ letter-spacing: 0.5px;
 outline: none;
 border: none;
 }
-form h3{
+.carre h3{
 font-size: 32px;
 font-weight: 500;
 line-height: 42px;
