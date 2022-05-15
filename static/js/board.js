@@ -118,7 +118,9 @@ async function getBoardJson() {
 }
 
 async function isCheckMate() {
-  var data = await fetch("/api/checkmate")
+  var url = new URL(window.location.href);
+  var gameId = url.searchParams.get("gameId");
+  var data = await fetch("/api/checkmate?gameId=" + gameId)
   .then(response => {
     return response.json();
   })

@@ -1,10 +1,11 @@
 #python -m flask run
 from importlib.resources import path
 from json import dumps
+import time
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addTurn, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
+from database import addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
 import chess
 import chess.engine
 from Mychess import Chess
@@ -158,7 +159,12 @@ def sign_out():
 
 @app.route('/api/checkmate')     
 def checkmate():
-    if(chessGame.isCheckMate()) :
+    time.sleep(1)
+    gameId = request.args.get('gameId')
+    game = getGame(gameId)
+    fen = jsonToFen(game[3])
+    board = chess.Board(fen)
+    if(board.is_checkmate()) :
         print("checkmate")
         return "true"
     return "false"
@@ -189,15 +195,10 @@ def stockfish():
     game = getGame(gameId)
     fen = jsonToFen(game[3])
     board = chess.Board(fen)
-    print("==========================")
-    print(board)
     engine = chess.engine.SimpleEngine.popen_uci(
         "engines/stockfish.exe")
     move = engine.play(board, chess.engine.Limit(time=0.1))
     board.push(move.move)
-    print("==========================")
-    print(board)
-    print("==========================")
 
     jsonFile = open(game[3], "w")
     jsonFile.write(boardToJson(board))
@@ -220,6 +221,7 @@ def chooseLevel():
     if not session.get('name') and not session.get('id'):
         return redirect('/login')
     return render_template('chooseLevel.html')
+
 @app.route('/deleteGames', methods=['GET', 'POST'])
 def deleteGames():
     if not session.get('name'):

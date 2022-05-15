@@ -384,7 +384,7 @@ class Chess :
         fen += "- "
         fen += "0"
         fen += " "
-        fen += "0"
+        fen += "1"
         return fen
 
 
