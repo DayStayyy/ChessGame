@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS games(
     playerId int NOT NULL,
     type VARCHAR(255) NOT NULL,
     path VARCHAR(255) NOT NULL,
+    turn int NOT NULL DEFAULT 1,
     FOREIGN KEY (playerId) REFERENCES users(user_id)
 ) ENGINE=INNODB;

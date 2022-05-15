@@ -1,52 +1,56 @@
 from json import dumps, loads
 import copy
+from re import S
 
 class Chess :
     def __init__(self,player1,player2) :
         self.player1 = player1
         self.player2 = player2
         self.turn = 0
-        self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
+        self.playerPieceList = [['r','n','b','q','k','p'],['R','N','B','Q','K','P']]
         
     def newGame(self) :
         self.board = [[' ' for i in range(8)] for j in range(8)]
-        self.board[0][0] = 'R'
-        self.board[0][1] = 'N'
-        self.board[0][2] = 'B'
-        self.board[0][3] = 'Q'
-        self.board[0][4] = 'K'
-        self.board[0][5] = 'B'
-        self.board[0][6] = 'N'
-        self.board[0][7] = 'R'
-        self.board[1][0] = 'P'
-        self.board[1][1] = 'P'
-        self.board[1][2] = 'P'
-        self.board[1][3] = 'P'
-        self.board[1][4] = 'P'
-        self.board[1][5] = 'P'
-        self.board[1][6] = 'P'
-        self.board[1][7] = 'P'
-        self.board[7][0] = 'r'
-        self.board[7][1] = 'n'
-        self.board[7][2] = 'b'
-        self.board[7][3] = 'q'
-        self.board[7][4] = 'k'
-        self.board[7][5] = 'b'
-        self.board[7][6] = 'n'
-        self.board[7][7] = 'r'
-        self.board[6][0] = 'p'
-        self.board[6][1] = 'p'
-        self.board[6][2] = 'p'
-        self.board[6][3] = 'p'
-        self.board[6][4] = 'p'
-        self.board[6][5] = 'p'
-        self.board[6][6] = 'p'
-        self.board[6][7] = 'p'
+        self.board[0][0] = 'r'
+        self.board[0][1] = 'n'
+        self.board[0][2] = 'b'
+        self.board[0][3] = 'q'
+        self.board[0][4] = 'k'
+        self.board[0][5] = 'b'
+        self.board[0][6] = 'n'
+        self.board[0][7] = 'r'
+        self.board[1][0] = 'p'
+        self.board[1][1] = 'p'
+        self.board[1][2] = 'p'
+        self.board[1][3] = 'p'
+        self.board[1][4] = 'p'
+        self.board[1][5] = 'p'
+        self.board[1][6] = 'p'
+        self.board[1][7] = 'p'
+        self.board[6][0] = 'P'
+        self.board[6][1] = 'P'
+        self.board[6][2] = 'P'
+        self.board[6][3] = 'P'
+        self.board[6][4] = 'P'
+        self.board[6][5] = 'P'
+        self.board[6][6] = 'P'
+        self.board[6][7] = 'P'
+        self.board[7][0] = 'R'
+        self.board[7][1] = 'N'
+        self.board[7][2] = 'B'
+        self.board[7][3] = 'Q'
+        self.board[7][4] = 'K'
+        self.board[7][5] = 'B'
+        self.board[7][6] = 'N'
+        self.board[7][7] = 'R'
+        self.turn = 1
         return  self.boardToJson()
 
 
 
     def isValidMove(self,positionStart,positionEnd) :
+        print(self.board[positionStart[0]][positionStart[1]])
+        print(self.playerPieceList[self.turn%2])
         if self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][5] :
             if positionEnd[0] == positionStart[0] + (2 if self.turn%2 == 0  else -2) and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ' and self.board[positionStart[0] + (1 if self.turn%2 == 0  else -1)][positionStart[1]] == ' ' and positionStart[0] == (1 if self.turn%2 == 0  else 6) :
                 return True
@@ -150,7 +154,8 @@ class Chess :
             return False  
                 
 
-    def playPieces(self,positionStart,positionEnd,board):
+    def playPieces(self,positionStart,positionEnd,board,turn):
+        self.turn = turn
         self.board = board
         if(self.isValidMove(positionStart,positionEnd)):
             print("Valid Move")
@@ -354,6 +359,33 @@ class Chess :
             self.board[int(key[0])][int(key[1])] = dictBoard[key]
         self.affBoard()
         return self.board
+
+    # fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+    def jsonToFen(self,jsonBoard) :
+        self.jsonToBoard(jsonBoard)
+        fen = ""
+        for i in range(len(self.board)) :
+            count = 0
+            for j in range(len(self.board[i])) :
+                if self.board[i][j] == ' ' :
+                    count += 1
+                else :
+                    if count != 0 :
+                        fen += str(count)
+                        count = 0
+                    fen += self.board[i][j]
+            if count != 0 :
+                fen += str(count)
+            if i != 7 :
+                fen += "/"
+        fen += " "
+        fen += "b" if self.turn%2 == 0 else "w"
+        fen += " KQkq "
+        fen += "- "
+        fen += "0"
+        fen += " "
+        fen += "0"
+        return fen
 
 
 # test = Chess('player1','player2')

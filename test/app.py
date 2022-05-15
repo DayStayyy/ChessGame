@@ -4,17 +4,16 @@ from json import dumps
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addTurn, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
+from database import getGame, insert_user,verify_password,createNewGamePng,getGame,getAllGames
 import chess
-import chess.engine
-from Mychess import Chess
+import chess.pgn
 
 app = Flask(__name__)
 app.run(debug=True)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = b'_5#y2L"F4Q8z\n\xec]/'
-chessGame = Chess('player1','player2')
+
 
 @app.route('/play', methods=['GET', 'POST'])     
 def play():
@@ -22,41 +21,31 @@ def play():
         return redirect('/login')
 
     if request.args.get('gameId'):
-        gameId = request.args.get('gameId')
-        if request.args.get('type')  and request.args.get('turn'):
-            type = request.args.get('type')
-            turn = request.args.get('turn')
-            game = getGame(request.args.get('gameId')) 
-
-            if game[2] == type and game[4] == int(turn):
-                return render_template('game.html')
-            print("game not found")
-            return redirect("/play?gameId=" + str(gameId)+"&type="+game[2]+"&turn="+str(game[4]))
-
-        else :
-            game = getGame(request.args.get('gameId'))
-            return redirect("/play?gameId=" + str(gameId)+"&type="+game[2]+"&turn="+str(game[4]))
+        return render_template('game.html')
     else:
         #create new game
         print("Create a new Game")
-        gameType = "player"
-        if request.args.get('type') :
-            gameType = request.args.get('type')
-            
-        gameId = newGameFunction(session['id'], gameType)
+        gameId = newGameFunction(session['id'], 1)
         print("gameId: ", gameId)
-        return redirect("/play?gameId=" + str(gameId)+"&type="+gameType)
+        return redirect("/play?gameId=" + str(gameId))
 
 @app.route('/api/board', methods=['GET'])
 def board():
     gameId = request.args.get('gameId')
-    print("gameId DE BOARD: ", gameId)
     game = getGame(gameId)
-    print("game: ", game)
-    jsonFile = open(game[3], "r")
-    board = jsonFile.read()
-    jsonFile.close()
-    return jsonify(board) 
+    pgn = open(game[3])
+    first_game = chess.pgn.read_game(pgn)
+    board = first_game.board()
+    boardArr = board.__str__().replace(" ", "").splitlines()
+    return jsonify(boardToJson(boardArr))
+
+def boardToJson(boardArr):
+    dictBoard = {}
+    for row in range(len(boardArr)) :
+        for cell in range(len(boardArr[row])) :
+            if(boardArr[row][cell] != '.') :
+                dictBoard[str(row) + str(cell)] = boardArr[row][cell]
+    return dumps(dictBoard)
 
 # play piece in a game with this id
 @app.route('/api/playPieces', methods=['GET'])
@@ -65,16 +54,15 @@ def playPieces():
     endPos = request.args.get('to')
     gameId = request.args.get('gameId')
     game = getGame(gameId)
-    jsonFile = open(game[3], "r")
-    board = jsonFile.read()
-    jsonFile.close()
-    result,board = chessGame.playPieces([int(startPos[0]),int(startPos[1])],[int(endPos[0]),int(endPos[1])],chessGame.jsonToBoard(board),game[4])
+    # jsonFile = open(game[3], "r")
+    # board = jsonFile.read()
+    # jsonFile.close()
+    pgn = open(game[3])
+    first_game = chess.pgn.read_game(pgn)
+    board = first_game.board()
+    board.legal_moves()
+    result,board = chess.playPieces([int(startPos[0]),int(startPos[1])],[int(endPos[0]),int(endPos[1])],chess.jsonToBoard(board))
     if result :
-        if(game[2] == "player"):
-            turn = game[4]+1
-        else :
-            turn = game[4]+2
-        addTurn(gameId,turn)
         jsonFile = open(game[3], "w")
         jsonFile.write(board)
         jsonFile.close()
@@ -89,22 +77,19 @@ def newGame():
         "Yo frend, you need to login to create a new game"
         return jsonify(-1)
     
+    path = "data/games/"
     if request.method == 'GET':
         if request.args.get('type') :
-            gameId = newGameFunction(session['id'], request.args.get('type'))
+            gameId = newGameFunction(session['id'],request.args.get('type'))
             return jsonify(gameId)
     return jsonify(-1)
 
 def newGameFunction(id,type) :
-    path = "data/gamesJson/"
-    gameId = createNewGameJson(id,type,path)
-    print("game created: ", gameId)
+    path = "data/gamesPng/"
+    gameId = createNewGamePng(id,type,path)
     path = getGame(gameId)[3]
-    print("path: ", path)
-    board = chessGame.newGame()
-    jsonFile = open(path, "w")
-    jsonFile.write(board)
-    jsonFile.close()
+    game = chess.pgn.Game()
+    print(game, file=open(path, "w"), end="\n\n")
     return gameId
 
 
@@ -158,7 +143,7 @@ def sign_out():
 
 @app.route('/api/checkmate')     
 def checkmate():
-    if(chessGame.isCheckMate()) :
+    if(chess.isCheckMate()) :
         print("checkmate")
         return "true"
     return "false"
@@ -171,52 +156,3 @@ def allGames():
     games = getAllGames(session['id'])
     print("games: ", games)
     return render_template('gamesBoard.html',games=games)
-
-
-# fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-# function read json to fen
-def jsonToFen(jsonFile):
-    jsonFile = open(jsonFile, "r")
-    board = jsonFile.read()
-    jsonFile.close()
-    result = chessGame.jsonToFen(board)
-    return result
-
-# Searching Stockfish's Move
-@app.route('/api/Stockfish', methods=['GET', 'POST'])
-def stockfish():
-    gameId = request.args.get('gameId')
-    game = getGame(gameId)
-    fen = jsonToFen(game[3])
-    board = chess.Board(fen)
-    print("==========================")
-    print(board)
-    engine = chess.engine.SimpleEngine.popen_uci(
-        "engines/stockfish.exe")
-    move = engine.play(board, chess.engine.Limit(time=0.1))
-    board.push(move.move)
-    print("==========================")
-    print(board)
-    print("==========================")
-
-    jsonFile = open(game[3], "w")
-    jsonFile.write(boardToJson(board))
-    jsonFile.close()
-    return "true"
-    
-
-
-def boardToJson(board):
-    boardArr = board.__str__().replace(" ", "").splitlines()
-    dictBoard = {}
-    for row in range(len(boardArr)) :
-        for cell in range(len(boardArr[row])) :
-            if(boardArr[row][cell] != '.') :
-                dictBoard[str(row) + str(cell)] = boardArr[row][cell]
-    return dumps(dictBoard)
-
-@app.route('/chooseLevel')
-def chooseLevel():
-    if not session.get('name') and not session.get('id'):
-        return redirect('/login')
-    return render_template('chooseLevel.html')

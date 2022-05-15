@@ -67,6 +67,7 @@ async function addPose(elem)
         await resetBoard();
         test = await isCheckMate()
         console.log("test"+test);
+
         if(test == true) {
           alert("Checkmate");
           const states = document.getElementById('states');
@@ -76,7 +77,26 @@ async function addPose(elem)
           const states = document.getElementById('states');
           states.innerHTML = "C'est au tour du joueur "+currentPlayer;
         }
-
+        if(url.searchParams.get("type") == "Stockfish") {
+          var data = await fetch("/api/Stockfish?gameId=" + gameId)
+          .then(response => {
+            return response.json();
+          })
+          console.log(data);
+          await resetBoard();
+          test = await isCheckMate()
+          console.log("test"+test);
+  
+          if(test == true) {
+            alert("Checkmate");
+            const states = document.getElementById('states');
+            states.innerHTML = "Le jeu est terminé, le joueur "+ currentPlayer + " à gagné";
+          } else {
+            currentPlayer = currentPlayer == 1 ? 2 : 1;
+            const states = document.getElementById('states');
+            states.innerHTML = "C'est au tour du joueur "+currentPlayer;
+          }
+        }
       }
       positionArr = [];
     }
