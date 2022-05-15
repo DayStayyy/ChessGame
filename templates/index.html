@@ -5,9 +5,23 @@
     <title>Chessboard</title>
   </head>
   <body>
-    <h1>{{ session['name'] }}</h1>
-    <table id='chessboard'></table>
-    <script src="{{url_for('static', filename='js/board.js')}}"></script>
+    <section class="topnav">
+      <a href="{{ url_for('menu') }}">menu</a>
+      <a href="">profile</a>
+      <a href="">1VSIA</a>
+      <a href="{{ url_for('sign_out') }}" class="split">logout</a>
+    </section>
+    <section class="background">
+      <section class="shape"></section>
+      <section class="shape"></section>
+    </section>
+    <h3 style="color:white;">Bienvenue :{{ session['name'] }}</h3>
+    <section class="carre">
+      <h3 style="color:white;" id="states">C'est au tour du joueur 1</h3>
+      
+      <table id='chessboard'></table>
+      <script src="{{url_for('static', filename='js/board.js')}}"></script>
+    </section>
+    
   </body>  
-  <div id="states">C'est au tour du joueur 1</div>
 </html>
