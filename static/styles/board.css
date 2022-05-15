@@ -1,65 +1,58 @@
 body {
   margin: 0;
-  font-family: 'Poppins',sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: #080710;
   overflow-y: hidden;
 }
 
 *:before,
-*:after{
-padding: 0;
-margin: 0;
-box-sizing: border-box;
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.background .shape{
+.background .shape {
   height: 200px;
   width: 200px;
   position: absolute;
   border-radius: 50%;
 }
 
-.shape:first-child{
-  background: linear-gradient(
-    #1845ad,
-    #23a2f6
-  );
-top:8%;
-left: 25%;
+.shape:first-child {
+  background: linear-gradient(#1845ad, #23a2f6);
+  top: 8%;
+  left: 25%;
 }
-.shape:last-child{
-  background: linear-gradient(
-    to right,
-    #ff512f,
-    #f09819
-  );
+.shape:last-child {
+  background: linear-gradient(to right, #ff512f, #f09819);
   bottom: 5%;
   right: 22%;
 }
-.carre{
-height: auto;
-width: auto;
-background-color: rgba(255,255,255,0.13);
-position: absolute;
-left: 30%;
-top:10%;
-border-radius: 10px;
-backdrop-filter: blur(10px);
-border: 2px solid rgba(255,255,255,0.1);
-box-shadow: 0 0 40px rgba(8,7,16,0.6);
-padding: 30px 15px;
+.carre {
+  height: auto;
+  width: auto;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  left: 30%;
+  top: 10%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 30px 15px;
 }
-.carre *{
-font-family: 'Poppins',sans-serif;
-letter-spacing: 0.5px;
-outline: none;
-border: none;
+.carre * {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
 }
-.carre h3{
-font-size: 32px;
-font-weight: 500;
-line-height: 42px;
-text-align: center;
+.carre h3 {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
 }
 
 .topnav {
@@ -88,25 +81,54 @@ text-align: center;
   color: white;
 }
 #chessboard {
-    padding: 0px;
-    margin: 0 auto;
-    border: 2px solid #181818;
-    border-collapse: collapse;
-  }
-  #chessboard tr td {
-    width: 60px;
-    height: 60px;
-    border: 2px solid #181818;
-  }
-  #chessboard tr:nth-child(2n) td:nth-child(2n+1) {
-    background: #9f9f9f;
-    border: 2px solid #181818;
-  }
-  #chessboard tr:nth-child(2n+1) td:nth-child(2n) {
-    background: #9f9f9f;
-    border: 2px solid #181818;
-  }
-  /*
+  padding: 0px;
+  margin: 0 auto;
+  border: 2px solid #181818;
+  border-collapse: collapse;
+}
+#chessboard tr td {
+  width: 60px;
+  height: 60px;
+  border: 2px solid #181818;
+}
+#chessboard tr:nth-child(2n) td:nth-child(2n + 1) {
+  background: #9f9f9f;
+  border: 2px solid #181818;
+}
+#chessboard tr:nth-child(2n + 1) td:nth-child(2n) {
+  background: #9f9f9f;
+  border: 2px solid #181818;
+}
+/*
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#chessboard {
+  padding: 0px;
+  margin: 0 auto;
+  border: 2px solid #181818;
+  border-collapse: collapse;
+}
+#chessboard tr td {
+  width: 60px;
+  height: 60px;
+}
+#chessboard tr:nth-child(2n) td:nth-child(2n + 1) {
+  background: #9f9f9f;
+}
+#chessboard tr:nth-child(2n + 1) td:nth-child(2n) {
+  background: #9f9f9f;
+}
+/*
     The following rules will use the unicode font symbols for chess pieces. They look like this:
       white chess king    ♔   U+2654
       white chess queen   ♕   U+2655
@@ -126,76 +148,148 @@ text-align: center;
     text for that respective chess piece, as well as the font size, line-height for the font, and
     some padding to try and center the chess piece in the <td> element.
   */
-  #chessboard .king.black:after {
-    content: "\265A";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .king.white:after {
-    content: "\2654";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .queen.black:after {
-    content: "\265B";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .queen.white:after {
-    content: "\2655";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .rook.black:after {
-    content: "\265C";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .rook.white:after {
-    content: "\2656";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .bishop.black:after {
-    content: "\265D";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .bishop.white:after {
-    content: "\2657";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .knight.black:after {
-    content: "\265E";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .knight.white:after {
-    content: "\2658";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .pawn.black:after {
-    content: "\265F";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
-  #chessboard .pawn.white:after {
-    content: "\2659";
-    font-size: 40px;
-    padding-left: 10px;
-    line-height: 30px;
-  }
+#chessboard .king.black:after {
+  content: "\265A";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .king.white:after {
+  content: "\2654";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.black:after {
+  content: "\265B";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.white:after {
+  content: "\2655";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.black:after {
+  content: "\265C";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.white:after {
+  content: "\2656";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.black:after {
+  content: "\265D";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.white:after {
+  content: "\2657";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.black:after {
+  content: "\265E";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.white:after {
+  content: "\2658";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.black:after {
+  content: "\265F";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.white:after {
+  content: "\2659";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
 
+#chessboard .king.black:after {
+  content: "\265A";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .king.white:after {
+  content: "\2654";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.black:after {
+  content: "\265B";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .queen.white:after {
+  content: "\2655";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.black:after {
+  content: "\265C";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .rook.white:after {
+  content: "\2656";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.black:after {
+  content: "\265D";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .bishop.white:after {
+  content: "\2657";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.black:after {
+  content: "\265E";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .knight.white:after {
+  content: "\2658";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.black:after {
+  content: "\265F";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}
+#chessboard .pawn.white:after {
+  content: "\2659";
+  font-size: 40px;
+  padding-left: 10px;
+  line-height: 30px;
+}

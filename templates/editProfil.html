@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <title>Edit Profil page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/editProfil.css') }}"
+    />
+  </head>
+  <navbar>
+    <ul class="nav">
+      <li><a class="active" href="{{ url_for('home') }}">Accueil</a></li>
+    </ul>
+  </navbar>
+  <body>
+    <div class="container">
+      <br />
+      <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <form action="" method="post">
+        <h1>Edit Profile</h1>
+        <img
+          src="https://assets.stickpng.com/images/580b585b2edbce24c47b27aa.png"
+          alt=""
+        />
+        <input
+          type="text"
+          placeholder="{{ session['name'] }}"
+          name="username"
+          value="{{
+            request.form.username }}"
+          readonly
+        />
+        <input
+          type="password"
+          placeholder="Old Password"
+          name="password"
+          value="{{
+            request.form.password }}"
+        />
+        <input
+          type="password"
+          placeholder="New Password"
+          name="newpassword"
+          value="{{
+            request.form.newpassword }}"
+        />
+        <input
+          type="password"
+          placeholder="Confirm New Password"
+          name="confirmpassword"
+          value="{{
+            request.form.confirmpassword }}"
+        />
+        <input
+          class="btn btn-default"
+          type="submit"
+          placeholder="Valider"
+          value="Valider"
+        />
+      </form>
+      {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }} {% endif %}</p>
+    </div>
+  </body>
+</html>

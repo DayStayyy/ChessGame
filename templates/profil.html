@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title>Profil page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='styles/profil.css') }}"
+    />
+  </head>
+  <navbar>
+    <ul class="nav">
+      <li><a class="active" href="{{ url_for('home') }}">Accueil</a></li>
+    </ul>
+  </navbar>
+  <body>
+    <div class="container">
+      <br />
+      <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+      </div>
+      <form action="" method="get">
+        <h1>Profile</h1>
+        <img
+          src="https://assets.stickpng.com/images/580b585b2edbce24c47b27aa.png"
+          alt=""
+        />
+        <h3>{{ session['name'] }}</h3>
+        <h4>Ranked Points : {{ session['points'] }}</h4>
+        <p class="editbutton"><a href="{{ url_for('editProfil') }}">Edit</a></p>
+      </form>
+      {% if error %}
+      <p class="error"><strong>Error:</strong> {{ error }} {% endif %}</p>
+    </div>
+  </body>
+</html>
