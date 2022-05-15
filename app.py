@@ -53,9 +53,14 @@ def reset():
 def login():
     error = None
     if request.method == 'POST':
-        if verify_password(request.form['username'],request.form['password']) == True:
+        if (request.form['username'] or request.form['password']) == None:
+            error = 'Please fill all the fields'
+            return render_template('login.html', error=error)
+        result, id = verify_password(request.form['username'],request.form['password'])
+        if result == True:
             session["name"] = request.form.get("username")
-            return redirect('/menu')
+            session["id"] = id
+            return redirect('/')
         return render_template('login.html', error=error)
     return render_template('login.html', error=error)
 
