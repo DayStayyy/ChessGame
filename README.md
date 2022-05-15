@@ -21,7 +21,7 @@ Python in 3.X
 - First you will need to git clone the project:
 
 ```
-git@gitlab.com:benji.gelineau/chessgame.git
+git clone https://gitlab.com/benji.gelineau/chessgame.git
 ```
 
 - Then you just need to do:
@@ -29,6 +29,7 @@ git@gitlab.com:benji.gelineau/chessgame.git
 ```
 pip install -r requirements.txt
 docker-compose up -d
+# wait 2 or 3 minutes for the docker container to be created
 python -m flask run
 ```
 
