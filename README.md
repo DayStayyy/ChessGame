@@ -47,4 +47,4 @@ python -m flask run
 ### Home
 
 - And finally you have the game
-  ![](https://i.imgur.com/zyBxvaR.png)
+  ![](https://i.imgur.com/pyRWZhe.png)
