@@ -5,7 +5,7 @@ import time
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
+from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames
 import chess
 import chess.engine
 from Mychess import Chess
@@ -166,8 +166,11 @@ def checkmate():
     board = chess.Board(fen)
     if(board.is_checkmate()) :
         print("checkmate")
+        if(game[4]%2 == 0):
+            addRankedPoints(game[1])
         return "true"
     return "false"
+    
 
 # function get all games of a user with this id
 @app.route('/allGames', methods=['GET', 'POST'])
