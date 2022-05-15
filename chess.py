@@ -1,10 +1,14 @@
-from json import dumps
+from json import dumps, loads
 import copy
 
 class Chess :
     def __init__(self,player1,player2) :
         self.player1 = player1
         self.player2 = player2
+        self.turn = 0
+        self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
+        
+    def newGame(self) :
         self.board = [[' ' for i in range(8)] for j in range(8)]
         self.board[0][0] = 'R'
         self.board[0][1] = 'N'
@@ -30,17 +34,18 @@ class Chess :
         self.board[7][5] = 'b'
         self.board[7][6] = 'n'
         self.board[7][7] = 'r'
-        # self.board[6][0] = 'p'
-        # self.board[6][1] = 'p'
-        # self.board[6][2] = 'p'
-        # self.board[6][3] = 'p'
-        # self.board[6][4] = 'p'
-        # self.board[6][5] = 'p'
-        # self.board[6][6] = 'p'
-        # self.board[6][7] = 'p'
-        self.turn = 0
-        self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
-        
+        self.board[6][0] = 'p'
+        self.board[6][1] = 'p'
+        self.board[6][2] = 'p'
+        self.board[6][3] = 'p'
+        self.board[6][4] = 'p'
+        self.board[6][5] = 'p'
+        self.board[6][6] = 'p'
+        self.board[6][7] = 'p'
+        return  self.boardToJson()
+
+
+
     def isValidMove(self,positionStart,positionEnd) :
         if self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][5] :
             if positionEnd[0] == positionStart[0] + (2 if self.turn%2 == 0  else -2) and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ' and self.board[positionStart[0] + (1 if self.turn%2 == 0  else -1)][positionStart[1]] == ' ' and positionStart[0] == (1 if self.turn%2 == 0  else 6) :
@@ -145,7 +150,8 @@ class Chess :
             return False  
                 
 
-    def playPieces(self,positionStart,positionEnd):
+    def playPieces(self,positionStart,positionEnd,board):
+        self.board = board
         if(self.isValidMove(positionStart,positionEnd)):
             print("Valid Move")
             checkBoard = copy.deepcopy(self.board)
@@ -155,11 +161,11 @@ class Chess :
                 print("Valid check")
                 self.board = checkBoard
                 self.turn += 1
-                return True
+                return True, self.boardToJson()
             print("Invalid check")
-            return False
+            return False, self.board
         print("Invalid Move")
-        return False
+        return False, self.board
 
 
     def affBoard(self) :
@@ -333,13 +339,22 @@ class Chess :
             print("Invalid move")
             self.play()
 
-    def getBoardJson(self) :
+    def boardToJson(self) :
         dictBoard = {}
         for row in range(len(self.board)) :
             for cell in range(len(self.board[row])) :
                 if(self.board[row][cell] != ' ') :
                     dictBoard[str(row) + str(cell)] = self.board[row][cell]
         return dumps(dictBoard)
+
+    def jsonToBoard(self,jsonBoard) :
+        self.board = [[' ' for i in range(8)] for j in range(8)]
+        dictBoard = loads(jsonBoard)
+        for key in dictBoard :
+            self.board[int(key[0])][int(key[1])] = dictBoard[key]
+        self.affBoard()
+        return self.board
+
 
 # test = Chess('player1','player2')
 # test.affBoard()
