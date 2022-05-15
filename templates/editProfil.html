@@ -32,13 +32,28 @@
           name="username"
           value="{{
             request.form.username }}"
+          readonly
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder="Old Password"
           name="password"
           value="{{
             request.form.password }}"
+        />
+        <input
+          type="password"
+          placeholder="New Password"
+          name="newpassword"
+          value="{{
+            request.form.newpassword }}"
+        />
+        <input
+          type="password"
+          placeholder="Confirm New Password"
+          name="confirmpassword"
+          value="{{
+            request.form.confirmpassword }}"
         />
         <input
           class="btn btn-default"

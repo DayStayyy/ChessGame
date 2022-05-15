@@ -2,7 +2,7 @@
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import insert_user,verify_password,getUserPoints
+from database import insert_user,verify_password,getUserPoints,editUser
 from chess import Chess
 
 app = Flask(__name__)
@@ -53,8 +53,13 @@ def reset():
 def login():
     error = None
     if request.method == 'POST':
-        if verify_password(request.form['username'],request.form['password']) == True:
+        if (request.form['username'] or request.form['password']) == None:
+            error = 'Please fill all the fields'
+            return render_template('login.html', error=error)
+        result, id = verify_password(request.form['username'],request.form['password'])
+        if result == True:
             session["name"] = request.form.get("username")
+            session["id"] = id
             return redirect('/')
         return render_template('login.html', error=error)
     return render_template('login.html', error=error)
@@ -78,14 +83,17 @@ def profil():
         return redirect('/login')
     return render_template('profil.html', error=error)
 
+# edit the profil with new password and check current password
 @app.route('/editProfil', methods=['GET', 'POST'])
 def editProfil():
     error = None
     if request.method == 'POST':
-        if request.form['username'] or request.form['password'] :
-           verify_password(request.form['username'],request.form['password'])
-           insert_user(request.form['username'], request.form['password']) 
-           return redirect(url_for('editProfil'))
-        else:
-            print("erreur de register")
+        if request.form['username'] or request.form['password'] or request.form['newpassword'] or request.form['confirmpassword'] :
+            if request.form['newpassword'] == request.form['confirmpassword']:
+                if verify_password(session["name"],request.form['password'])[0] == True:
+                    editUser(request.form['newpassword'], request.form['username'])
+                    return redirect(url_for('profil'))
+                return render_template('profil.html', error=error)
+            return render_template('profil.html', error=error)
     return render_template('editProfil.html', error=error)
+
