@@ -68,3 +68,10 @@ def getAllGames(userId) :
     mycursor.execute(sql, val)
     myresult = mycursor.fetchall()
     return myresult
+
+def deleteGame(userId, gameId) :
+    mycursor = mydb.cursor()
+    sql = "DELETE FROM games WHERE playerId = %s AND gameId = %s"
+    val = (userId, gameId)
+    mycursor.execute(sql, val)
+    mydb.commit()

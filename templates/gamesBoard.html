@@ -1,3 +1,26 @@
-{% for game in games  %}
-    <p class="button"><a href="{{ url_for('play') }}?gameId={{game[0]}}">game</a></p>
-{% endfor %}
+<html>
+<head>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/gamesBoard.css') }}">
+    <title>Game enregistrer</title>
+</head>
+
+<body>
+    <section class="topnav">
+        <a href="{{ url_for('menu') }}">menu</a>
+        <a href="">profile</a>
+        <a href="">1VSIA</a>
+        <a href="{{ url_for('sign_out') }}" class="split">logout</a>
+      </section>
+    <div class="grid">
+        {% for game in games  %}
+            <div style="border-radius:  20px ; margin: 10px;">
+                <p action="" class="button"><a href="{{ url_for('play') }}?gameId={{game[0]}}">game</a></p>
+                <p action="" class="button"><a href="{{ url_for('deleteGames') }}?gameId={{game[0]}}">delete</a></p>
+                <h3></h3>
+            </div> 
+        {% endfor %}
+    </div>
+</body>
+
+
+            

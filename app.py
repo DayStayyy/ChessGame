@@ -3,7 +3,7 @@ from importlib.resources import path
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import getGame, insert_user,verify_password,createNewGame,getGame,getAllGames
+from database import getGame, insert_user,verify_password,createNewGame,getGame,getAllGames,deleteGame
 from chess import Chess
 
 app = Flask(__name__)
@@ -154,3 +154,13 @@ def allGames():
     games = getAllGames(session['id'])
     print("games: ", games)
     return render_template('gamesBoard.html',games=games)
+
+@app.route('/deleteGames', methods=['GET', 'POST'])
+def deleteGames():
+    if not session.get('name'):
+        return redirect('/login')
+    if request.args.get('gameId'):
+        gameId = request.args.get('gameId')
+        deleteGame(session['id'],gameId)
+        return redirect(url_for('allGames'))
+    return render_template('gamesBoard.html')
