@@ -13,7 +13,7 @@
 ```
 docker
 flask
-An ide
+Python in 3.X
 ```
 
 ## Setup
