@@ -95,6 +95,9 @@ def newGameFunction(id,type) :
 def login():
     error = None
     if request.method == 'POST':
+        if (request.form['username'] or request.form['password']) == None:
+            error = 'Please fill all the fields'
+            return render_template('login.html', error=error)
         result, id = verify_password(request.form['username'],request.form['password'])
         if result == True:
             session["name"] = request.form.get("username")

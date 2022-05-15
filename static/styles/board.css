@@ -1,3 +1,92 @@
+body {
+  margin: 0;
+  font-family: 'Poppins',sans-serif;
+  background-color: #080710;
+  overflow-y: hidden;
+}
+
+*:before,
+*:after{
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+}
+
+.background .shape{
+  height: 200px;
+  width: 200px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.shape:first-child{
+  background: linear-gradient(
+    #1845ad,
+    #23a2f6
+  );
+top:8%;
+left: 25%;
+}
+.shape:last-child{
+  background: linear-gradient(
+    to right,
+    #ff512f,
+    #f09819
+  );
+  bottom: 5%;
+  right: 22%;
+}
+.carre{
+height: auto;
+width: auto;
+background-color: rgba(255,255,255,0.13);
+position: absolute;
+left: 30%;
+top:10%;
+border-radius: 10px;
+backdrop-filter: blur(10px);
+border: 2px solid rgba(255,255,255,0.1);
+box-shadow: 0 0 40px rgba(8,7,16,0.6);
+padding: 30px 15px;
+}
+.carre *{
+font-family: 'Poppins',sans-serif;
+letter-spacing: 0.5px;
+outline: none;
+border: none;
+}
+.carre h3{
+font-size: 32px;
+font-weight: 500;
+line-height: 42px;
+text-align: center;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Create a right-aligned (split) link inside the navigation bar */
+.topnav a.split {
+  float: right;
+  background-color: #8f2d00;
+  color: white;
+}
 #chessboard {
     padding: 0px;
     margin: 0 auto;
@@ -7,12 +96,15 @@
   #chessboard tr td {
     width: 60px;
     height: 60px;
+    border: 2px solid #181818;
   }
   #chessboard tr:nth-child(2n) td:nth-child(2n+1) {
     background: #9f9f9f;
+    border: 2px solid #181818;
   }
   #chessboard tr:nth-child(2n+1) td:nth-child(2n) {
     background: #9f9f9f;
+    border: 2px solid #181818;
   }
   /*
     The following rules will use the unicode font symbols for chess pieces. They look like this:
@@ -106,4 +198,4 @@
     padding-left: 10px;
     line-height: 30px;
   }
-  
+
