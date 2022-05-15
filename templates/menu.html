@@ -17,7 +17,7 @@
       <form class="registerForm" action="" method="post">
         <h1 style="color:white;">Chessgame</h1> 
         <h3>Menu</h3>
-        <p class="registerbutton"><a href="{{ url_for('home') }}">jouer</a></p>
+        <p class="registerbutton"><a href="{{ url_for('play') }}">jouer</a></p>
         <p class="button"><a style="position:center" href="{{ url_for('home') }}">option</a></p>
         <p class="button"><a href="{{ url_for('sign_out') }}">logout</a></p>
         {% if error %}

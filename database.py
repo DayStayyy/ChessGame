@@ -10,35 +10,49 @@ mydb = mysql.connector.connect(
 print(mydb) 
 
 def insert_user(username, password):
-    mycursor = mydb.cursor()
+    mycursor = mydb.cursor(buffered=True)
     hashedpassword = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     sql = "INSERT INTO users (pseudo, password) VALUES (%s, %s)"
     val = (username, hashedpassword)
     mycursor.execute(sql, val)
     mydb.commit()
 
-
-
-# function to check password in database and return boolean
-def verify_password(username, password):
-    print(username)
+def createNewGame(playerId,type,path) :
     mycursor = mydb.cursor()
-    sql = "SELECT password FROM users WHERE pseudo = %s"
-    sql_user = "SELECT pseudo FROM users"
-    val = (username, )
+    sql = "INSERT INTO games (playerId,type,path) VALUES (%s, %s, %s)"
+    val = (playerId, type, path)
+    mycursor.execute(sql, val)
+    mydb.commit()
+    # get the id of the game just created
+    sql = "SELECT id FROM games WHERE playerId = %s"
+    val = (playerId, )
     mycursor.execute(sql, val)
     myresult = mycursor.fetchone()
-    mycursor.execute(sql_user, )
-    myresult_user = mycursor.fetchall()
-    res = "".join(myresult)
-    print(res)
-    print(password)
-    print(myresult_user)
-    # if username not in myresult_user:
-    #     return False
-    if len(myresult) <= 0:
-        return False
-    if bcrypt.checkpw(password.encode('utf-8'), res.encode('utf-8')):
-        return True
-    return False
-    
+    while myresult is not None :
+        myresult = mycursor.fetchone()
+    # modify path to add the id of the game
+    path = path + str(myresult[0]) + ".json"
+    sql = "UPDATE games SET path = %s WHERE gameId = %s"
+    val = (path, myresult[0])
+    mycursor.execute(sql, val)
+    mydb.commit()
+    return myresult[0]
+
+# function to check if user exists and password is correct and return the id of the user
+def verify_password(username, password):
+    mycursor = mydb.cursor()
+    sql = "SELECT user_id, password FROM users WHERE pseudo = %s"
+    val = (username, )
+    myresult = mycursor.execute(sql, val)
+    if myresult is not None :
+        if bcrypt.checkpw(password.encode('utf-8'), myresult[1]) :
+            return True, myresult[0]
+    return False, 0
+
+def getGame(gameId):
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM games WHERE id = %s"
+    val = (gameId, )
+    mycursor.execute(sql, val)
+    myresult = mycursor.fetchone()
+    return myresult

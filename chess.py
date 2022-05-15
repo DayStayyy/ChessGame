@@ -30,17 +30,20 @@ class Chess :
         self.board[7][5] = 'b'
         self.board[7][6] = 'n'
         self.board[7][7] = 'r'
-        # self.board[6][0] = 'p'
-        # self.board[6][1] = 'p'
-        # self.board[6][2] = 'p'
-        # self.board[6][3] = 'p'
-        # self.board[6][4] = 'p'
-        # self.board[6][5] = 'p'
-        # self.board[6][6] = 'p'
-        # self.board[6][7] = 'p'
+        self.board[6][0] = 'p'
+        self.board[6][1] = 'p'
+        self.board[6][2] = 'p'
+        self.board[6][3] = 'p'
+        self.board[6][4] = 'p'
+        self.board[6][5] = 'p'
+        self.board[6][6] = 'p'
+        self.board[6][7] = 'p'
         self.turn = 0
         self.playerPieceList = [['R','N','B','Q','K','P'],['r','n','b','q','k','p']]
         
+    def newGame() :
+        pass
+
     def isValidMove(self,positionStart,positionEnd) :
         if self.board[positionStart[0]][positionStart[1]] == self.playerPieceList[self.turn%2][5] :
             if positionEnd[0] == positionStart[0] + (2 if self.turn%2 == 0  else -2) and positionEnd[1] == positionStart[1] and self.board[positionEnd[0]][positionEnd[1]] == ' ' and self.board[positionStart[0] + (1 if self.turn%2 == 0  else -1)][positionStart[1]] == ' ' and positionStart[0] == (1 if self.turn%2 == 0  else 6) :
