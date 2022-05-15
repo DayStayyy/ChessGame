@@ -2,6 +2,7 @@
 from importlib.resources import path
 from json import dumps
 import time
+from chessgame.database import editUser, getUserPoints
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
@@ -231,3 +232,25 @@ def deleteGames():
         deleteGame(session['id'],gameId)
         return redirect(url_for('allGames'))
     return render_template('gamesBoard.html')
+@app.route('/profil', methods=['GET', 'POST'])
+def profil():
+    session["points"] = getUserPoints(session["name"])
+    error = None
+    if not session.get('name'):
+        return redirect('/login')
+    return render_template('profil.html', error=error)
+
+# edit the profil with new password and check current password
+@app.route('/editProfil', methods=['GET', 'POST'])
+def editProfil():
+    error = None
+    if request.method == 'POST':
+        if request.form['username'] or request.form['password'] or request.form['newpassword'] or request.form['confirmpassword'] :
+            if request.form['newpassword'] == request.form['confirmpassword']:
+                if verify_password(session["name"],request.form['password'])[0] == True:
+                    editUser(request.form['newpassword'], request.form['username'])
+                    return redirect(url_for('profil'))
+                return render_template('profil.html', error=error)
+            return render_template('profil.html', error=error)
+    return render_template('editProfil.html', error=error)
+

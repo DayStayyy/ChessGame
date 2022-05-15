@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id int AUTO_INCREMENT PRIMARY KEY,
     pseudo VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    rankedpoints INT 
+    rankedpoints INT DEFAULT 0
 )  ENGINE=INNODB;
 
 CREATE TABLE IF NOT EXISTS games(
@@ -15,3 +15,4 @@ CREATE TABLE IF NOT EXISTS games(
     turn int NOT NULL DEFAULT 1,
     FOREIGN KEY (playerId) REFERENCES users(user_id)
 ) ENGINE=INNODB;
+
