@@ -1,5 +1,3 @@
-
-
 CREATE TABLE IF NOT EXISTS users (
     user_id int AUTO_INCREMENT PRIMARY KEY,
     pseudo VARCHAR(255) NOT NULL,
@@ -16,3 +14,9 @@ CREATE TABLE IF NOT EXISTS games(
     FOREIGN KEY (playerId) REFERENCES users(user_id)
 ) ENGINE=INNODB;
 
+CREATE TABLE IF NOT EXISTS score (
+    game_id int,
+    result VARCHAR(255) NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES games(gameId)
+    
+)  ENGINE=INNODB;
