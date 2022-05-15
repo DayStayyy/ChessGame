@@ -11,7 +11,6 @@
       <a href="{{ url_for('chooseLevel') }}">Jouer</a>
       <a href="{{ url_for('allGames') }}">Mes Parties</a>
       <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
-      <a href="{{ url_for('menu') }}" class="split">Sauvegarder la partie</a>
     </section>
     <section class="background">
       <section class="shape"></section>
@@ -21,9 +20,13 @@
     <section class="carre">
       <h3 style="color:white;" id="states">C'est au tour du joueur 1</h3>
       
-      <table id='chessboard'></table>
+      <table id='chessboard'></table> 
       <script src="{{url_for('static', filename='js/board.js')}}"></script>
+      <section class="topnav">
+        <a href="{{ url_for('menu') }}" class="split">Sauvegarder la partie</a>
+      </section>
     </section>
     
   </body>  
+  
 </html>
