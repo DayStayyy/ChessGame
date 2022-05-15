@@ -1,8 +1,8 @@
 <html>
   <head>
-    <title>Game menu</title>
+    <title>Option</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/menu.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/option.css') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -16,14 +16,8 @@
       </div>
       <form class="registerForm" action="" method="post">
         <h1 style="color:white;">Chessgame</h1> 
-        <h3>Menu</h3>
-        <p class="registerbutton"><a href="{{ url_for('home') }}">jouer 1VS1</a></p>
-        <p class="registerbutton"><a href="{{ url_for('home') }}">jouer 1VSIA</a></p>
-        <p class="button"><a style="position:center" href="{{ url_for('option') }}">option</a></p>
-        <p class="button"><a href="{{ url_for('sign_out') }}">logout</a></p>
-        {% if error %}
-          <h1 class="error"><strong>Mauvais mot de passe ou utilisateur</strong></h1> {{ error }}
-        {% endif %}
+        <h3>Option</h3>
+        <p class="registerbutton"><a href="{{ url_for('menu') }}">retour</a></p>
       </form>
       
     </div>

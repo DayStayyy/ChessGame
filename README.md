@@ -1,52 +1,50 @@
-# Chess IA
+# Flask chessgame
 
-## Cahier des charges
+> Clamadieu-Tharaud Adrien
+> Gélineau Benjamin
+> Joyet Hugo
 
--ia(s): 6 points voir 9 si voila
--jeu d'echec en python en web (13 points) :
+## Explaination
 
-- 1VS1 (sur le meme écran, 1 points)
-- 1VSIA (1pts)
-- BDD(sauvegarder une partie, profil d'un joueur, login/register) (3 PTS)
-- register/authentification (2 pts)
-- Sauvegarder une game (2 points)
-- Crud (4 points)
+- The objective of the project was to create our own chess website made with flask and docker
 
--Interactions utilisateurs (4 points) :
+## prerequisites
 
-- Boutons lancer une partie
-- Cliquer sur les pieces pour les déplacer
-- Bouton sauvegarder une partie
+```
+docker
+flask
+An ide
+```
 
-Communication entre 2 logiciels (6 points)
+## Setup
 
-- Human <-> Machine
+- First you will need to git clone the project:
 
-## Fonctionnalités
+```
+git@gitlab.com:benji.gelineau/chessgame.git
+```
 
-Déroulement d’une partie (Difficulté 5)
+- Then you just need to do:
 
-- les deux joueurs apparaissent de part et d’autre de l’écran
-- l’espace de jeu se limite à l’écran, pas de physique, la vue caméra est dite “topdown”
-- un des boutons doit permettre au joueur de commencer une partie
-- les données de la base doivent être utilisées pour gérer le profile du joueur
-- un Joueur perd des points ou en gagne en fonction de l'issue de la partie.
+```
+pip install -r requirements.txt
+docker-compose up -d
+python -m flask run
+```
 
-Fin d’une partie (Difficulté 3) :
+## Features
 
-- la partie se termine quand un joueur est échec et mat, ou quand il y a un pat
-- le logiciel bascule alors sur l’écran de fin de partie (gagnant joueur 1 ou joueur 2 ou Draw)
-- pour le score, vous devez créer une formule prenant en compte la différence de points de vie, le temps passé sur la partie ainsi que la différence sur les données de BDD du joueur 1 et 2
+### Register/login
 
-Ecran d’option (1pts) :
+- First of all we have a login/register page that will allowed users to create accounts on
+  ![](https://i.imgur.com/zdlNJOJ.png)
 
-- il devra permettre aux joueurs de modifier toutes leurs données (puissance de tir, vitesses ...) Difficulté : 3
-- ces données devront être stockées dans une base de données, afin de pouvoir les réutilisées même après fermeture du logiciel Difficulté : 2
+### Game Menu
 
-Total : 38 points
+- when you will be logged in, you will arrive on the game menu, you will be able to determine if you want to play versus an ia or against an another local player. You have also the possibility to manage your options and logout.
+  ![](https://i.imgur.com/csS8UOq.png)
 
-# Game
+### Home
 
-Class jeu
-Class pieces
-Class Joueur
+- And finally you have the game
+  ![](https://i.imgur.com/zyBxvaR.png)
