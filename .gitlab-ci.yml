@@ -1,15 +1,25 @@
-image: python:3
+services:
+  - mysql
+
+variables:
+  MYSQL_DATABASE: "chessgame"
+  MYSQL_ROOT_PASSWORD: "example"
+
+connect:
+  image: mysql
+  script:
+    - echo "SELECT 'OK';" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
 
 stages:
   - build
 
 build-code-job:
   stage: build
+  image: python:3
   script:
     - echo "Lancement de l'application"
     - apt-get update -qy
     - apt-get install -qq git
-    - docker-compose up -d
     - pip install -r requirements.txt
-    - sleep 60
+    - sleep 120
     - bash script.sh
