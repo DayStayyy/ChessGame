@@ -1,0 +1,15 @@
+image: python:3
+
+stages:
+  - build
+
+build-code-job:
+  stage: build
+  script:
+    - echo "Lancement de l'application"
+    - apt-get update -qy
+    - apt-get install -qq git
+    - docker-compose up -d
+    - pip install -r requirements.txt
+    - sleep 60
+    - bash script.sh
