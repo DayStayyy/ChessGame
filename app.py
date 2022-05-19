@@ -253,8 +253,8 @@ def profil():
     print("profil")
     error = None
     if not session.get('name'):
-        session["points"] = getUserPoints(session["name"])
         return redirect('/login')
+    session["points"] = getUserPoints(session["name"])
     return render_template('profil.html', error=error)
 
 # edit the profil with new password and check current password

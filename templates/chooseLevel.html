@@ -30,7 +30,6 @@
         <p class="button"><a href="{{ url_for('play') }}?type=player">1vs1</a></p>
         <p class="button"><a href="{{ url_for('play') }}?type=minmax">IA Facile</a></p>
         <p class="button"><a href="{{ url_for('play') }}?type=Stockfish">IA Difficile</a></p>
-        <p class="button"><a href="{{ url_for('play') }}?type=IAVsIA">IA Difficile</a></p>
         {% if error %}
           <h1 class="error"><strong>Mauvais mot de passe ou utilisateur</strong></h1> {{ error }}
         {% endif %}
