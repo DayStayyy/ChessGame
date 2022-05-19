@@ -9,7 +9,7 @@ from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,
 import chess
 import chess.engine
 from Mychess import Chess
-
+from minmax import selectmove
 app = Flask(__name__)
 app.run(debug=True)
 app.config["SESSION_PERMANENT"] = False
@@ -206,7 +206,22 @@ def stockfish():
     jsonFile.close()
     return "true"
     
+# Searching minmax's Move
+@app.route('/api/minmax', methods=['GET', 'POST'])
+def minmax():
+    print("chessGame.minmax")
+    gameId = request.args.get('gameId')
+    game = getGame(gameId)
+    fen = jsonToFen(game[3])
+    board = chess.Board(fen)
+    move = selectmove(3,board)
+    print("move: ", move)
+    board.push(move)
 
+    jsonFile = open(game[3], "w")
+    jsonFile.write(boardToJson(board))
+    jsonFile.close()
+    return "true"
 
 def boardToJson(board):
     boardArr = board.__str__().replace(" ", "").splitlines()
