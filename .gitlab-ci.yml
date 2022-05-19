@@ -6,7 +6,7 @@ variables:
   MYSQL_ROOT_PASSWORD: "example"
   MYSQL_USER: "benji"
   MYSQL_PASSWORD: "benji"
-  MYSQL_HOST: "localhost"
+  MYSQL_HOST: "127.0.0.1"
   MYSQL_PORT: "3306"
 
 stages:
