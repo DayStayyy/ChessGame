@@ -4,9 +4,9 @@ import os
 import mysql.connector
 import bcrypt
 
-load_dotenv()
 
 mydb = mysql.connector.connect(
+    load_dotenv(),
     DATABASE_HOST=os.getenv('DATABASE_HOST'),
     DATABASE_PORT=os.getenv('DATABASE_PORT'),
     DATABASE_ROOT_PASSWORD=os.getenv('DATABASE_ROOT_PASSWORD'),
