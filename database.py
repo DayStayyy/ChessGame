@@ -7,11 +7,12 @@ import bcrypt
 load_dotenv()
 
 mydb = mysql.connector.connect(
-    host="DATABASE_HOST",
-    user="DATABASE_USER",
-    password="DATABASE_PASSWORD",
-    database='DATABASE_NAME',
-    rootpassword='DATABASE_ROOT_PASSWORD'
+    DATABASE_HOST=os.getenv('DATABASE_HOST'),
+    DATABASE_PORT=os.getenv('DATABASE_PORT'),
+    DATABASE_ROOT_PASSWORD=os.getenv('DATABASE_ROOT_PASSWORD'),
+    DATABASE_USER=os.getenv('DATABASE_USER'),
+    DATABASE_PASSWORD=os.getenv('DATABASE_PASSWORD'),
+    DATABASE_NAME=os.getenv('DATABASE_NAME')
 )
 print(mydb) 
 
