@@ -13,7 +13,7 @@
   <body>
     <section class="topnav">
       <a href="{{ url_for('menu') }}">Menu</a>
-      <a href="{{ url_for('profil') }}">Profile</a>
+      <a href="{{ url_for('profil') }}">Profil</a>
       <a href="{{ url_for('chooseLevel') }}">Jouer</a>
       <a href="{{ url_for('allGames') }}">Mes Parties</a>
       <a href="{{ url_for('sign_out') }}" class="split">Se déconnecter</a>
@@ -28,7 +28,8 @@
         <h1 style="color:white;">Chessgame</h1> 
         <h3>Choisis</h3>
         <p class="button"><a href="{{ url_for('play') }}?type=player">1vs1</a></p>
-        <p class="button"><a href="{{ url_for('play') }}?type=Stockfish">1vsIA</a></p>
+        <p class="button"><a href="{{ url_for('play') }}?type=minmax">IA Facile</a></p>
+        <p class="button"><a href="{{ url_for('play') }}?type=Stockfish">IA Difficile</a></p>
         {% if error %}
           <h1 class="error"><strong>Mauvais mot de passe ou utilisateur</strong></h1> {{ error }}
         {% endif %}
