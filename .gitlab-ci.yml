@@ -4,6 +4,10 @@ services:
 variables:
   MYSQL_DATABASE: "chessgame"
   MYSQL_ROOT_PASSWORD: "example"
+  MYSQL_USER: "benji"
+  MYSQL_PASSWORD: "benji"
+  MYSQL_HOST: "localhost"
+  MYSQL_PORT: "3306"
 
 stages:
   - connect
@@ -13,7 +17,7 @@ connect-code-job:
   stage: connect
   image: mysql
   script:
-    - echo "SELECT 'OK';" | mysql --user=root --password="$MYSQL_ROOT_PASSWORD" --host=mysql "$MYSQL_DATABASE"
+    - echo "SELECT 'OK';" | mysql --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" --host="$MYSQL_HOST" --port="$MYSQL_PORT" "$MYSQL_DATABASE"
 
 build-code-job:
   stage: build
