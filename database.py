@@ -1,11 +1,17 @@
+from json import load
+from dotenv import load_dotenv
 import os
 import mysql.connector
-import bcrypt 
+import bcrypt
+
+load_dotenv()
+
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="benji",
-    password="benji",
-    database='chessgame'
+    host="DATABASE_HOST",
+    user="DATABASE_USER",
+    password="DATABASE_PASSWORD",
+    database='DATABASE_NAME',
+    rootpassword='DATABASE_ROOT_PASSWORD'
 )
 print(mydb) 
 

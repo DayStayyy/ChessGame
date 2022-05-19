@@ -3,3 +3,4 @@ Flask
 pytest
 mysql.connector
 bcrypt
+python-dotenv
