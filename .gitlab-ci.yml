@@ -6,18 +6,11 @@ variables:
   MYSQL_ROOT_PASSWORD: "example"
   MYSQL_USER: "benji"
   MYSQL_PASSWORD: "benji"
-  MYSQL_HOST: "127.0.0.1"
+  MYSQL_HOST: "mysql"
   MYSQL_PORT: "3306"
 
 stages:
-  - connect
   - build
-
-connect-code-job:
-  stage: connect
-  image: mysql
-  script:
-    - echo "SELECT 'OK';" | mysql --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" --host="$MYSQL_HOST" --port="$MYSQL_PORT" "$MYSQL_DATABASE"
 
 build-code-job:
   stage: build
