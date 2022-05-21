@@ -20,5 +20,5 @@ build-code-job:
     - apt-get update -qy
     - apt-get install -qq git
     - pip install -r requirements.txt
-    - sleep 60
+    - sleep 30
     - bash script.sh

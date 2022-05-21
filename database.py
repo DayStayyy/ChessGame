@@ -12,11 +12,15 @@ DATABASE_USER=os.getenv('DATABASE_USER')
 DATABASE_PASSWORD=os.getenv('DATABASE_PASSWORD')
 DATABASE_NAME=os.getenv('DATABASE_NAME')
 
+connection_string_params = {
+"host": DATABASE_HOST,
+"user": DATABASE_USER,
+"password": DATABASE_PASSWORD,
+"db": DATABASE_NAME,
+}
+
 mydb = mysql.connector.connect(
-    DATABASE_HOST,
-    DATABASE_USER,
-    DATABASE_PASSWORD,
-    DATABASE_NAME
+    **connection_string_params
 )
 print(mydb) 
 
