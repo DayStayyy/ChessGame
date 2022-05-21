@@ -1,0 +1,24 @@
+services:
+  - mysql
+
+variables:
+  MYSQL_DATABASE: "chessgame"
+  MYSQL_ROOT_PASSWORD: "example"
+  MYSQL_USER: "benji"
+  MYSQL_PASSWORD: "benji"
+  MYSQL_HOST: "mysql"
+  MYSQL_PORT: "3306"
+
+stages:
+  - build
+
+build-code-job:
+  stage: build
+  image: python:3
+  script:
+    - echo "Lancement de l'application"
+    - apt-get update -qy
+    - apt-get install -qq git
+    - pip install -r requirements.txt
+    - sleep 30
+    - bash script.sh

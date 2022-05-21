@@ -5,7 +5,7 @@ import time
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames,getUserPoints,editUser
+from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user, verify_password, createNewGameJson, getGame, getAllGames, getUserPoints, editUser
 import chess
 import chess.engine
 from Mychess import Chess
