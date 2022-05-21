@@ -1,6 +1,6 @@
 python-chess
 Flask
 pytest
-mysql.connector
+mysql-connector-python
 bcrypt
 python-dotenv
