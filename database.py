@@ -17,6 +17,7 @@ connection_string_params = {
 "user": DATABASE_USER,
 "password": DATABASE_PASSWORD,
 "db": DATABASE_NAME,
+"auth_plugin":"mysql_native_password"
 }
 
 mydb = mysql.connector.connect(
