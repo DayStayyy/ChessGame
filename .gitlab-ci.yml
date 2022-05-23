@@ -37,8 +37,8 @@ deploy-code-job:
   stage: deploy
   image: debian
   before_script:
-    - sudo apt-get update -qy
-    - sudo apt-get install ssh-agent
+    - apt-get update -qy
+    - apt-get install ssh-agent
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
