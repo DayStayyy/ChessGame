@@ -8,47 +8,33 @@ variables:
   MYSQL_PASSWORD: "benji"
   MYSQL_HOST: "mysql"
   MYSQL_PORT: "3306"
-  SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+  PÄSSWÖRD: $PASSWORD
 stages:
-  # - test
-  # - build
+  - test
+  - build
   - deploy
 
-# test-code-job:
-#   stage: test
-#   image: python:3
-#   script:
-#     - python -m unittest test.testMychess
+test-code-job:
+  stage: test
+  image: python:3
+  script:
+    - python -m unittest test.testMychess
 
-# build-code-job:
-#   stage: build
-#   image: python:3
-#   script:
-#     - echo "Lancement de l'application"
-#     - apt-get update -qy
-#     - apt-get install -qq git
-#     - python -m pip install --upgrade pip
-#     - pip install -r requirements.txt
-#     - bash script.sh
+build-code-job:
+  stage: build
+  image: python:3
+  script:
+    - echo "Lancement de l'application"
+    - apt-get update -qy
+    - apt-get install -qq git
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - bash script.sh
 
 deploy-code-job:
   stage: deploy
   image: ictu/sshpass
-  # before_script:
-  #   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
-  #   - eval $(ssh-agent -s)
-  #   - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  #   - mkdir -p ~/.ssh
-  #   - chmod 700 ~/.ssh
-  #   - ssh-keyscan projetinfra.ddns.net >> ~/.ssh/known_hosts
-  #   - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Welcome to ChessGame"
-    - sshpass -p 'benji' ssh -oStrictHostKeyChecking=no -tt benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80 ; exit"
+    - sshpass -p $PASSWORD ssh -oStrictHostKeyChecking=no -tt benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo systemctl restart server.service ; exit"
     - echo "Vous êtes connecté les bg !"
-
-
-
-
-
-# "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
