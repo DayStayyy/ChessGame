@@ -36,7 +36,6 @@ deploy-code-job:
   image: debian
   script:
     - echo "Welcome to ChessGame"
-    - apt-get sshpass -y
     - ssh benji@projetinfra.ddns.net
     - echo "Vous êtes connecté les bg"	
 
