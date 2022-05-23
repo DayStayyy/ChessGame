@@ -33,14 +33,7 @@ stages:
 
 deploy-code-job:
   stage: deploy
-  image: debian:buster
-  before_script:
-    - apt-get install ssh-agent
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
+  image: ubuntu
   script:
     - echo "Welcome to ChessGame"
-    - ssh benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
+    - sshpass -p 'benji' ssh benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
