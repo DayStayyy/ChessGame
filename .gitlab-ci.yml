@@ -45,7 +45,8 @@ deploy-code-job:
   script:
     - echo "Welcome to ChessGame"
     - ssh -tt benji@projetinfra.ddns.net
-    - echo "Vous êtes connecté les bg"	
+    - echo "Vous êtes connecté les bg !"	
+
 
 
 
