@@ -10,7 +10,13 @@ variables:
   MYSQL_PORT: "3306"
 
 stages:
+  - test
   - build
+
+test-code-job:
+  stage: test
+  script:
+    - python -m unittest test.testMychess
 
 build-code-job:
   stage: build

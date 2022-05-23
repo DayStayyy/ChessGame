@@ -5,3 +5,4 @@ mysql-connector-python
 bcrypt
 python-dotenv
 IPython
+unittest
