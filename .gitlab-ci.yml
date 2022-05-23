@@ -26,6 +26,7 @@ build-code-job:
     - echo "Lancement de l'application"
     - apt-get update -qy
     - apt-get install -qq git
+    - python -m pip install --upgrade pip
     - pip install -r requirements.txt
     - sleep 30
     - bash script.sh
