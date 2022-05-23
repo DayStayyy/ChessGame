@@ -45,6 +45,7 @@ function createBoard() {
 
 async function addPose(elem) 
 {
+  elem.color = "red";
   var position = elem.dataset.position;
   var pieceEl = elem.querySelector('td[data-position="' + position + '"]');
   var piece = pieceEl.className;
