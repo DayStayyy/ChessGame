@@ -37,7 +37,7 @@ deploy-code-job:
   script:
     - echo "Welcome to ChessGame"
     - apt-get sshpass -y
-    - sshpass -p 'benji' ssh benji@projetinfra.ddns.net
+    - ssh benji@projetinfra.ddns.net
     - echo "Vous êtes connecté les bg"	
 
 
