@@ -9,6 +9,7 @@ variables:
   MYSQL_HOST: "mysql"
   MYSQL_PORT: "3306"
 
+
 stages:
   - build
 
