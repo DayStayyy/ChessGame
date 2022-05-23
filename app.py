@@ -5,11 +5,11 @@ import time
 from flask import Flask, render_template, redirect, url_for, request, jsonify, session, make_response
 import mysql.connector
 import bcrypt
-from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,verify_password,createNewGameJson,getGame,getAllGames,getUserPoints,editUser
+from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user, verify_password, createNewGameJson, getGame, getAllGames, getUserPoints, editUser
 import chess
 import chess.engine
 from Mychess import Chess
-
+from minmax import selectmove
 app = Flask(__name__)
 app.run(debug=True)
 app.config["SESSION_PERMANENT"] = False
@@ -206,7 +206,22 @@ def stockfish():
     jsonFile.close()
     return "true"
     
+# Searching minmax's Move
+@app.route('/api/minmax', methods=['GET', 'POST'])
+def minmax():
+    print("chessGame.minmax")
+    gameId = request.args.get('gameId')
+    game = getGame(gameId)
+    fen = jsonToFen(game[3])
+    board = chess.Board(fen)
+    move = selectmove(3,board)
+    print("move: ", move)
+    board.push(move)
 
+    jsonFile = open(game[3], "w")
+    jsonFile.write(boardToJson(board))
+    jsonFile.close()
+    return "true"
 
 def boardToJson(board):
     boardArr = board.__str__().replace(" ", "").splitlines()
@@ -238,8 +253,8 @@ def profil():
     print("profil")
     error = None
     if not session.get('name'):
-        session["points"] = getUserPoints(session["name"])
         return redirect('/login')
+    session["points"] = getUserPoints(session["name"])
     return render_template('profil.html', error=error)
 
 # edit the profil with new password and check current password

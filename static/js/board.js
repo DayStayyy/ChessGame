@@ -78,12 +78,13 @@ async function addPose(elem)
           const states = document.getElementById('states');
           states.innerHTML = "C'est au tour du joueur "+currentPlayer;
         }
-        if(url.searchParams.get("type") == "Stockfish") {
-          var data = await fetch("/api/Stockfish?gameId=" + gameId)
+        if(url.searchParams.get("type") == "Stockfish" || url.searchParams.get("type") == "minmax") {
+          console.log("url.searchParams.get(type) : " + url.searchParams.get("type"));
+          var data = await fetch("/api/"+ url.searchParams.get("type") + "?gameId=" + gameId)
           .then(response => {
             return response.json();
           })
-          console.log(data);
+          console.log("response : " + data);
           await resetBoard();
           test = await isCheckMate()
           console.log("test"+test);
