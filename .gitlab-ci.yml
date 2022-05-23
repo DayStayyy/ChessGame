@@ -8,10 +8,12 @@ variables:
   MYSQL_PASSWORD: "benji"
   MYSQL_HOST: "mysql"
   MYSQL_PORT: "3306"
+  SSH_PRIVATE_KEY: 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
 
 stages:
   - test
   - build
+  - deploy
 
 test-code-job:
   stage: test
@@ -30,3 +32,18 @@ build-code-job:
     - pip install -r requirements.txt
     - sleep 30
     - bash script.sh
+
+deploy-code-job:
+  stage: deploy
+  image: debian
+  before_script:
+    - sudo apt-get update -qy
+    - sudo apt-get install ssh-agent
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - echo "Welcome to ChessGame"
+    - ssh benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
