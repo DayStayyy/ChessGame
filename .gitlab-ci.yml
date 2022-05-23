@@ -44,7 +44,7 @@ deploy-code-job:
   #   - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Welcome to ChessGame"
-    - sshpass -p 'benji' ssh -tt benji@projetinfra.ddns.net
+    - sshpass -p 'benji' ssh -oStrictHostKeyChecking=no -tt benji@projetinfra.ddns.net
     - echo "Vous êtes connecté les bg !"	
 
 
