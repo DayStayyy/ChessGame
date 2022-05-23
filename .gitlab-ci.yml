@@ -33,10 +33,17 @@ stages:
 
 deploy-code-job:
   stage: deploy
-  image: debian
+  image: ubuntu
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan projetinfra.ddns.net >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Welcome to ChessGame"
-    - apt-get install ssh -y
     - ssh benji@projetinfra.ddns.net
     - echo "Vous êtes connecté les bg"	
 
