@@ -10,6 +10,7 @@ import chess
 import chess.engine
 from Mychess import Chess
 from minmax import selectmove
+
 app = Flask(__name__)
 app.run(debug=True)
 app.config["SESSION_PERMANENT"] = False
@@ -160,7 +161,7 @@ def checkmate():
     time.sleep(0.5)
     gameId = request.args.get('gameId')
     game = getGame(gameId)
-    fen = jsonToFen(game[3])
+    fen = jsonToFen(game[3],game[4])
     board = chess.Board(fen)
     if(board.is_checkmate()) :
         print("checkmate")
@@ -182,11 +183,11 @@ def allGames():
 
 # fen = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 # function read json to fen
-def jsonToFen(jsonFile):
+def jsonToFen(jsonFile,turn):
     jsonFile = open(jsonFile, "r")
     board = jsonFile.read()
     jsonFile.close()
-    result = chessGame.jsonToFen(board)
+    result = chessGame.jsonToFen(board,turn)
     return result
 
 # Searching Stockfish's Move
@@ -194,7 +195,7 @@ def jsonToFen(jsonFile):
 def stockfish():
     gameId = request.args.get('gameId')
     game = getGame(gameId)
-    fen = jsonToFen(game[3])
+    fen = jsonToFen(game[3],game[4])
     board = chess.Board(fen)
     engine = chess.engine.SimpleEngine.popen_uci(
         "engines/stockfish.exe")
@@ -212,7 +213,7 @@ def minmax():
     print("chessGame.minmax")
     gameId = request.args.get('gameId')
     game = getGame(gameId)
-    fen = jsonToFen(game[3])
+    fen = jsonToFen(game[3],game[4])
     board = chess.Board(fen)
     move = selectmove(3,board)
     print("move: ", move)
