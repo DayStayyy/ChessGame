@@ -78,7 +78,7 @@ async function addPose(elem)
           const states = document.getElementById('states');
           states.innerHTML = "C'est au tour du joueur "+currentPlayer;
         }
-        if(url.searchParams.get("type") == "Stockfish" || url.searchParams.get("type") == "minmax") {
+        if(url.searchParams.get("type") == "Stockfish" || url.searchParams.get("type") == "minmax" || url.searchParams.get("type") == "minmaxBad") {
           console.log("url.searchParams.get(type) : " + url.searchParams.get("type"));
           var data = await fetch("/api/"+ url.searchParams.get("type") + "?gameId=" + gameId)
           .then(response => {

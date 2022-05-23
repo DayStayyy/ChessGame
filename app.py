@@ -224,6 +224,23 @@ def minmax():
     jsonFile.close()
     return "true"
 
+# Searching minmax's Move
+@app.route('/api/minmaxBad', methods=['GET', 'POST'])
+def minmaxBad():
+    print("chessGame.minmaxBad")
+    gameId = request.args.get('gameId')
+    game = getGame(gameId)
+    fen = jsonToFen(game[3],game[4])
+    board = chess.Board(fen)
+    move = selectmove(1,board)
+    print("move: ", move)
+    board.push(move)
+
+    jsonFile = open(game[3], "w")
+    jsonFile.write(boardToJson(board))
+    jsonFile.close()
+    return "true"
+
 def boardToJson(board):
     boardArr = board.__str__().replace(" ", "").splitlines()
     dictBoard = {}
