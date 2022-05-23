@@ -10,33 +10,31 @@ variables:
   MYSQL_PORT: "3306"
   SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
 stages:
-  - test
-  - build
+  # - test
+  # - build
   - deploy
 
-test-code-job:
-  stage: test
-  image: python:3
-  script:
-    - python -m unittest test.testMychess
+# test-code-job:
+#   stage: test
+#   image: python:3
+#   script:
+#     - python -m unittest test.testMychess
 
-build-code-job:
-  stage: build
-  image: python:3
-  script:
-    - echo "Lancement de l'application"
-    - apt-get update -qy
-    - apt-get install -qq git
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
-    - bash script.sh
+# build-code-job:
+#   stage: build
+#   image: python:3
+#   script:
+#     - echo "Lancement de l'application"
+#     - apt-get update -qy
+#     - apt-get install -qq git
+#     - python -m pip install --upgrade pip
+#     - pip install -r requirements.txt
+#     - bash script.sh
 
 deploy-code-job:
   stage: deploy
-  image: kroniak/ssh-client
+  image: debian:buster
   before_script:
-    - chmod 400 $SSH_PRIVATE_KEY
-    - apt-get update -qy
     - apt-get install ssh-agent
     - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
