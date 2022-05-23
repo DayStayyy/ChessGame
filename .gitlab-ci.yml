@@ -37,4 +37,10 @@ deploy-code-job:
   script:
     - echo "Welcome to ChessGame"
     - apt-get sshpass -y
-    - sshpass -p 'benji' ssh benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
+    - sshpass -p 'benji' ssh benji@projetinfra.ddns.net
+    - echo "Vous êtes connecté les bg"	
+
+
+
+
+# "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80"
