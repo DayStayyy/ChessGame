@@ -10,26 +10,26 @@ variables:
   MYSQL_PORT: "3306"
   PASSWORD: $PASSWORD
 stages:
-  - test
-  - build
+  # - test
+  # - build
   - deploy
 
-test-code-job:
-  stage: test
-  image: python:3
-  script:
-    - python -m unittest test.testMychess
+# test-code-job:
+#   stage: test
+#   image: python:3
+#   script:
+#     - python -m unittest test.testMychess
 
-build-code-job:
-  stage: build
-  image: python:3
-  script:
-    - echo "Lancement de l'application"
-    - apt-get update -qy
-    - apt-get install -qq git
-    - python -m pip install --upgrade pip
-    - pip install -r requirements.txt
-    - bash script.sh
+# build-code-job:
+#   stage: build
+#   image: python:3
+#   script:
+#     - echo "Lancement de l'application"
+#     - apt-get update -qy
+#     - apt-get install -qq git
+#     - python -m pip install --upgrade pip
+#     - pip install -r requirements.txt
+#     - bash script.sh
 
 deploy-code-job:
   stage: deploy
