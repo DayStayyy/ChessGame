@@ -36,7 +36,7 @@ deploy-code-job:
   image: ictu/sshpass
   script:
     - echo "Welcome to ChessGame !"
-    - sshpass -p 'benji' ssh -oStrictHostKeyChecking=no -tt benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo chmod +x scriptDeploy.sh ; ./scriptDeploy.sh ; exit"
+    - sshpass -p 'benji' ssh -oStrictHostKeyChecking=no -tt benji@projetinfra.ddns.net "cd ../.. ; cd /var/ProjetInfra/chessgame ; sudo git pull ; sudo pip3 install -r requirements.txt ; sudo docker compose up -d ; sleep 20 ; sudo python3 -m flask run -h 0.0.0.0 -p 80 & ; exit"
     - echo "Lancement de l'application"
 
 
