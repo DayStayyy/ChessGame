@@ -9,7 +9,7 @@ from database import addRankedPoints, addTurn, deleteGame, getGame, insert_user,
 import chess
 import chess.engine
 from Mychess import Chess
-from minmax import selectmove
+from minmax import MinMax
 
 app = Flask(__name__)
 app.run(debug=True)
@@ -17,6 +17,8 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 app.config["SECRET_KEY"] = b'_5#y2L"F4Q8z\n\xec]/'
 chessGame = Chess('player1','player2')
+minmaxGood = MinMax(3)
+minmaxBad = MinMax(1)
 
 @app.route('/play', methods=['GET', 'POST'])     
 def play():
@@ -215,7 +217,7 @@ def minmax():
     game = getGame(gameId)
     fen = jsonToFen(game[3],game[4])
     board = chess.Board(fen)
-    move = selectmove(3,board)
+    move = minmaxGood.selectmove(board)
     print("move: ", move)
     board.push(move)
 
@@ -232,7 +234,7 @@ def minmaxBad():
     game = getGame(gameId)
     fen = jsonToFen(game[3],game[4])
     board = chess.Board(fen)
-    move = selectmove(1,board)
+    move = minmaxBad.selectmove(board)
     print("move: ", move)
     board.push(move)
 
